@@ -1,0 +1,63 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+body {
+	margin: 0;
+	font-family: "Factoria";
+}
+@font-face {
+	font-family: "Factoria";
+	src: 
+		url('Factoria-Demi.ttf');
+}
+#game {
+	display: none;
+}
+#scores table {
+	max-width: 33%;
+	margin: auto;
+	margin-top: 3rem;
+}
+#scores td {
+	border: 1px solid;
+	border-collapse: collapse;
+}
+#away,#home {
+	max-height: 99vh;
+	/*display: inline;*/
+	width: 49.5vw;
+	text-align: center;
+	overflow-y: hidden;
+	
+}
+#away img, #home img {
+	height: 2rem;
+	width: auto;
+}
+#away h2, #home h2 {
+	word-spacing: 37.5vw;
+	margin-top: 0;
+}
+#away {
+	background-color: gray;
+	color: white;
+}
+.featured {
+	height: 8rem !important;
+	margin-left: auto;
+	margin-right: auto;
+}
+.dueUp img {
+	height: 4rem !important;
+}
+ul {
+	list-style-type: none;
+}
+.vertJust {
+	display: grid;
+	justify-content: center;
+}
+.vertJust h3 {
+	margin: 0px;
+}
