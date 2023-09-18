@@ -96,9 +96,9 @@ function pitchDisplay(game,ha) {
 			p.innerText = val.pitchArsenal[i].stat.type.description + " - " + (Math.round(val.pitchArsenal[i].stat.averageSpeed*10)/10) + " MPH ("+(Math.round(val.pitchArsenal[i].stat.percentage * 100)) + "%)";
 			pitches.appendChild(p);
 		}
-		} //else {
-			// pitches.after(document.createElement("br"));
-		// }
+		} else {
+			pitches.innerHTML = "";
+		}
 		//babip, k/9, p/ip, p/pa
 		//var head = document.createElement("h3");
 		// head.innerText = "Advanced Stats";
