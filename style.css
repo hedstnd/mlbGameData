@@ -36,8 +36,10 @@ body {
 	width: auto;
 }
 #away h2, #home h2 {
-	word-spacing: 37.5vw;
+	/*word-spacing: 37.5vw;*/
 	margin-top: 0;
+	display: block;
+	width: 45vw;
 }
 #away {
 	background-color: gray;
@@ -57,7 +59,23 @@ ul {
 .vertJust {
 	display: grid;
 	justify-content: center;
+	height: 99vh;
 }
 .vertJust h3 {
 	margin: 0px;
+}
+#away .winProb {
+	text-align: left;
+}
+#home .winProb {
+	text-align: right;
+}
+#homeScore, #awayName {
+	float: left;
+}
+#homeName, #awayScore {
+	float: right;
+}
+#games {
+	height: 100vh;
 }
