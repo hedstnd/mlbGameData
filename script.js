@@ -126,7 +126,7 @@ function pitchDisplay(game,ha) {
 			if (!game.liveData.plays.currentPlay.isComplete && val.statSplits["c"+game.liveData.plays.currentPlay.count.balls+game.liveData.plays.currentPlay.count.strikes]) {
 				hand.innerHTML+="<p><h3>"+game.liveData.plays.currentPlay.count.balls+"-"+game.liveData.plays.currentPlay.count.strikes+" count"+"</h3>"+val.statSplits["c"+game.liveData.plays.currentPlay.count.balls+game.liveData.plays.currentPlay.count.strikes].avg + " AVG&emsp;"+val.statSplits["c"+game.liveData.plays.currentPlay.count.balls+game.liveData.plays.currentPlay.count.strikes].ops+ " OPS&emsp;"+val.statSplitsAdvanced["c"+game.liveData.plays.currentPlay.count.balls+game.liveData.plays.currentPlay.count.strikes].extraBaseHits+ " XBH&emsp;"+val.statSplits["c"+game.liveData.plays.currentPlay.count.balls+game.liveData.plays.currentPlay.count.strikes].leftOnBase+ " LOB&emsp;" + val.statSplits["c"+game.liveData.plays.currentPlay.count.balls+game.liveData.plays.currentPlay.count.strikes].plateAppearances+ " PA";
 			}
-			if (game.liveData.linescore.currentInning>= 9 && !game.liveData.linescore.isTopInning) {
+			if (game.liveData.linescore.currentInning>= 9 && !game.liveData.linescore.isTopInning && game.liveData.plays.currentPlay.runners.length > (game.liveData.linescore.teams.away.runs - game.liveData.linescore.teams.home.runs)) {
 				hand.innerHTML+= "<br>"+val.seasonAdvanced.walkOffs+ " walk-offs";
 			}
 		}
@@ -176,12 +176,20 @@ function pitchDisplay(game,ha) {
 		//document.getElementById(ha).appendChild(div);
 		getData(baseURL + "/api/v1/game/"+game.gamePk+"/contextMetrics").then((valCM) => {
 			console.log(valCM);
-			//if (valCM[ha + "WinProbability"] >= 50) {
+			var wProbText = game.gameData.teams[ha].abbreviation +  " Win&nbsp;Probability:&nbsp;"+(Math.round(valCM[ha+"WinProbability"]*10)/10)+"%";
+			document.getElementById(ha+"WPSpan").style.width = valCM[ha+"WinProbability"] + "%";
+			document.getElementById(ha+"WP").innerText = "";
+			// document.getElementById(ha+"WPSpan").innerText = "";
+				document.getElementById(ha+"WPImg").src="";
 				wP = document.getElementById(ha+"WP");//createElement("span");
 				// wP.className = 'winProb';
-				wP.innerHTML = "Win&nbsp;Probability:&nbsp;"+(Math.round(valCM[ha+"WinProbability"]*10)/10)+"%";
-				top.after(wP);
-			//}
+				wP.innerHTML = wProbText;
+				top.before(wP);
+				//document.getElementById(ha+"WPSpan").value=valCM.awayWinProbability;
+			if (valCM[ha + "WinProbability"] >= 1) {
+				// document.getElementById(ha+"WPSpan").innerHTML = wProbText;
+				document.getElementById(ha+"WPImg").src = "https://midfield.mlbstatic.com/v1/team/"+game.gameData.teams[ha].id+"/spots/144";
+			}
 		});
 	});
 	
