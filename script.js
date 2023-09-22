@@ -7,7 +7,7 @@ var uRL;
 window.onload = function() {
 	getData(baseURL + "/api/v1/schedule?sportId=1").then((value) => {
 		console.log(value);
-		g = value.dates[0].games.filter(e => e.status.statusCode == "I" || e.status.statusCode == "P");
+		g = value.dates[0].games.filter(e => e.status.statusCode == "I" || e.status.statusCode == "PW");
 		tab = document.createElement("table");
 		for (var i = 0; i < g.length/3; i++) {
 			row = document.createElement("tr");
@@ -157,11 +157,17 @@ function pitchDisplay(game,ha) {
 			pics[i] = document.createElement("img");
 			due.appendChild(pics[i]);
 		}
-		if (isPitch) {
+		if ((isPitch && game.liveData.linescore.outs < 3 )|| (!isPitch && game.liveData.linescore.outs == 3 && (game.gameData.status.statusCode != "F" && game.gameData.status.statusCode != "O"))) {
 			pics[0].src = getPhotoUrl(game.liveData.linescore.defense.batter.id);
 			pics[1].src = getPhotoUrl(game.liveData.linescore.defense.onDeck.id);
 			pics[2].src = getPhotoUrl(game.liveData.linescore.defense.inHole.id);
-		} else {
+		}  else if (isPitch && game.liveData.linescore.outs == 3) {
+			pics[0].src = getPhotoUrl(game.liveData.linescore.offense.batter.id);
+			pics[1].src = getPhotoUrl(game.liveData.linescore.offense.onDeck.id);
+			pics[2].src = getPhotoUrl(game.liveData.linescore.offense.inHole.id);
+		}
+		else {
+			pics[0].src="";
 			pics[1].src = getPhotoUrl(game.liveData.linescore.offense.onDeck.id);
 			pics[2].src = getPhotoUrl(game.liveData.linescore.offense.inHole.id);
 		}
@@ -182,7 +188,7 @@ function pitchDisplay(game,ha) {
 				bPen.appendChild(bPics[i]);
 			}
 		} else {
-						for (var i = 0; i < game.liveData.boxscore.teams[ha].bench.length; i++) {
+				for (var i = 0; i < game.liveData.boxscore.teams[ha].bench.length; i++) {
 				bPics[i] = document.createElement("img");
 				bPics[i].src = getPhotoUrl(game.liveData.boxscore.teams[ha].bench[i]);
 				bPen.appendChild(bPics[i]);
@@ -207,9 +213,9 @@ function pitchDisplay(game,ha) {
 				//document.getElementById(twos[i]+"WPSpan").value=valCM.awayWinProbability;
 			if (valCM[twos[i] + "WinProbability"] <= 2) {
 				// document.getElementById(twos[i]+"WPSpan").innerHTML = wProbText;
-				document.getElementById(twos[i]+"WPImg").style.display = "none";
+				document.getElementById(twos[i]+"WPImg").style.opacity = "0";
 			} else {
-				document.getElementById(twos[i]+"WPImg").style.display = "inline-block";
+				document.getElementById(twos[i]+"WPImg").style.opacity = "1";
 			}
 		}
 	});
