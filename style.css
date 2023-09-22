@@ -139,8 +139,9 @@ p {
 }
 .phi.home.day {
 	background-color: #fffdd0;
-	text-stroke: 1px #284898;	
-	-webkit-text-stroke: 1px #284898;
+	/* text-stroke: 0.5px #284898;	 */
+	/* -webkit-text-stroke: 0.5px #284898; */
+	text-shadow: 0.5px 0 0 #284898, 0 0.5px 0 #284898, -0.5px 0 0 #284898, 0 -0.5px 0 #284898;
 }
 .phi.home.day #homeWPImg {
 	content: url('https://www.mlbstatic.com/team-logos/team-cap-on-light/143.svg');
@@ -190,8 +191,9 @@ p {
 }
 .tb.away {
 	background-color: #092c5c;
-	text-stroke: 1px #8fbce6;
-	-webkit-text-stroke: 1px #8fbce6;
+	/* text-stroke: 0.5px #8fbce6; */
+	/* -webkit-text-stroke: 0.5px #8fbce6; */
+	text-shadow: 1px 0 0 #8fbce6, 0 1px 0 #8fbce6, -1px 0 0 #8fbce6, 0 -1px 0 #8fbce6;
 }
 .tex.home {
 	color: #003278;
@@ -201,6 +203,15 @@ p {
 }
 .tex.home.friday, .tex.home.saturday {
 	background-color: #fffdd0 !important;
+	color: #c0111f;
+}
+.tex.home.friday #homeWPImg, .tex.home.saturday #homeWPImg {
+	content: url('logos/tex-fri-sat.png');
+	height: 2.5vh;
+	width: auto;
+	padding: .25vh;
+	border-radius: 50%;
+	background-color: black;
 }
 .tor.home {
 	color: #134a8e;
@@ -210,7 +221,8 @@ p {
 }
 .was.home {
 	color: #ab0003;
-	-webkit-text-stroke: 1px #14225a;
+	/* -webkit-text-stroke: 0.5px #14225a; */
+	text-shadow: 1px 0 0 #14225a, 0 1px 0 #14225a, 0 -1px 0 #14225a, -1px 0 0 #14225a;
 }
 .was.away {
 	background-color: #14225a;
@@ -225,19 +237,29 @@ p {
 	border-radius: 50%;
 }
 .ari.home {
-	-webkit-text-stroke: 1px #30ced8;
-	text-stroke: 1px #30ced8;
+	-webkit-text-stroke: 0.5px #30ced8;
+	text-stroke: 0.5px #30ced8;
 }
 .ari.away {
 	color: #000;
-	-webkit-text-stroke: 1px #a71930;
-	text-stroke: 1px #a71930;
+	-webkit-text-stroke: 0.5px #a71930;
+	text-stroke: 0.5px #a71930;
 }
 .atl {
-	color: ce1141;
+	color: #ce1141;
 }
 .atl.away {
 	background-color: #13274f;
+}
+.atl.home.night.saturday {
+	background-color: rgb(0,61,166);
+	color: white;
+	text-shadow: 1px 0px 0px rgb(219,0,49), 0px 1px 0px rgb(219,0,49),-1px 0px 0px rgb(219,0,49),0px -1px 0px rgb(219,0,49);
+}
+.atl.home.night.saturday #homeWPImg {
+	content: url('logos/atl-sat.png');
+	background-color: white;
+	border-radius: 50%;
 }
 .bal.home {
 	background-color: #df4601;
@@ -276,6 +298,15 @@ p {
 	background-color: gray;
 	color: #0e3386;
 }
+.chc.home.friday {
+	background-color: #32374e;
+	color: #fff;
+	-webkit-text-stroke: 0.5px #6f96cb;
+}
+.chc.home.friday #homeWPImg {
+	content: url('logos/chc-fri.png');
+	border-radius: 50%;
+}
 .cin.home {
 	color: #c6011f;
 }
@@ -285,8 +316,8 @@ p {
 }
 .cin.home.friday {
 	background-color: #000;
-	-webkit-text-stroke: 1px #c6011f;
-	text-stroke: 1px #c6011f;
+	-webkit-text-stroke: 0.5px #c6011f;
+	text-stroke: 0.5px #c6011f;
 }
 .cle.home {
 	background-color: #e50022;
@@ -308,7 +339,7 @@ p {
 	background-color: #023020;
 	color: #fff;
 }
-col.home.wednesday #homeWPImg, .col.home.saturday #homeWPImg {
+.col.home.wednesday #homeWPImg, .col.home.saturday #homeWPImg {
 	content: url('https://media-s3-us-east-1.ceros.com/mlb/images/2022/05/23/f54767fef8e727d2634db80e5c96a037/patch.png');
 }
 .det.home {
@@ -317,8 +348,8 @@ col.home.wednesday #homeWPImg, .col.home.saturday #homeWPImg {
 .det.away {
 	background-color: gray;
 	color: #oc2340;
-	-webkit-text-stroke: 1px #fa4616;
-	text-stroke: 1px #fa4616;
+	-webkit-text-stroke: 0.5px #fa4616;
+	text-stroke: 0.5px #fa4616;
 }
 .hou.home {
 	color: #002d62;
@@ -353,28 +384,52 @@ col.home.wednesday #homeWPImg, .col.home.saturday #homeWPImg {
 	background-color: #005a9c;
 }
 .mia {
-	text-stroke: 1px #00a3e0;
-	-webkit-text-stroke: 1px #00a3e0;
+	text-stroke: 0.5px #00a3e0;
+	-webkit-text-stroke: 0.5px #00a3e0;
 	color: #000;
 }
 .mia.home.friday {
-	background-color: #ef33470;
+	background-color: #ef3340;
 	color: #fff;
+}
+.mia.home.friday #homeWPImg {
+	content: url('logos/mia-fri.png');
+	border-radius: 50%;
 }
 .mia.home.saturday {
 	color: #009ca6;
-	text-stroke: 1px black;
-	-webkit-text-stroke: 1px black;
+	text-stroke: 0.5px black;
+	-webkit-text-stroke: 0.5px black;
+}
+.mia.home.saturday #homeWPImg {
+	content: url('logos/mia-sat.jpg');
+	border-radius: 50%;
 }
 .mil.home {
 	color: #12284b;
-	text-stroke: 1px #ffc52f;
-	-webkit-text-stroke: 1px #ffc52f;
+	text-stroke: 0.5px #ffc52f;
+	-webkit-text-stroke: 0.5px #ffc52f;
 	background-color: #fffdd0;
 }
 .mil.away {
 	background-color: #12284b;
 	color: #ffc52f;
+}
+.mil.home.friday {
+	background-color: #74b0e6;
+	color: #ffc52f;
+}
+.mil.home.friday #homeWPImg {
+	content: url('logos/mil-home-fri.png');
+	height: 3vh;
+	width: auto;
+}
+.mil.home.friday p, .mil.home.friday h3,.mil.home.friday h2,.mil.home.friday #homeWP, .mil.home.friday ul {
+	filter: drop-shadow(-2px 2px #12284b);
+	-webkit-text-stroke: unset;
+}
+.mil.home.friday p h3 {
+	filter: unset;
 }
 .min.home {
 	color: #d31145;
@@ -406,16 +461,19 @@ col.home.wednesday #homeWPImg, .col.home.saturday #homeWPImg {
 	text-stroke:1px #efb21e;
 }
 .pit.home {
-	-webkit-text-stroke: 1px #fdb827;
-	text-stroke: 1px #fdb827;
+	/* -webkit-text-stroke: 0.5px #fdb827; */
+	/* text-stroke: 0.5px #fdb827; */
+	text-shadow: 1px 0 0 #fdb827, 0 1px 0 #fdb827, -1px 0 0 #fdb827, 0 -1px 0 #fdb827;
 }
 .pit.away {
-	-webkit-text-stroke: 1px #fdb827;
-	text-stroke: 1px #fdb827;
+	/* -webkit-text-stroke: 0.5px #fdb827; */
+	/* text-stroke: 0.5px #fdb827; */
+	text-shadow: 1px 0 0 #fdb827, 0 1px 0 #fdb827, -1px 0 0 #fdb827, 0 -1px 0 #fdb827;
 	color: black;
 }
 .pit.home.friday {
 	background-color: #fdb827;
+	-webkit-text-stroke: unset;
 }
 .sd {
 	color: #2f241d;
@@ -423,13 +481,21 @@ col.home.wednesday #homeWPImg, .col.home.saturday #homeWPImg {
 .sd.away {
 	background-color: #cec6c0;
 }
+.sd.home.friday {
+	background-color: rgb(118,200,177);
+	color: rgb(238,71,143);
+}
+.sd.home.friday #homeWPImg {
+	content: url('logos/sd-fri.png');
+	padding-left: .25vw;
+}
 .sf.home {
 	background-color: #efd19f;
 }
 .sf{
 	color: #000;
-	-webkit-text-stroke: 1px #fd5a1e;
-	text-stroke: 1px #fd5a1e;
+	-webkit-text-stroke: 0.5px #fd5a1e;
+	text-stroke: 0.5px #fd5a1e;
 }
 .sf.home.tuesday {
 	background-color: #fff;
@@ -450,11 +516,14 @@ col.home.wednesday #homeWPImg, .col.home.saturday #homeWPImg {
 	background-color: #002878;
 	color: #ffcc00;
 }
+.sea.home.friday #homeWPImg {
+	content: url('logos/sea-fri.png');
+}
 .sea.home.sunday {
 	background-color: #fffdd0;
 	color: #002878;
-	-webkit-text-stroke: 1px #ffcc00;
-	text-stroke: 1px #ffcc00;
+	-webkit-text-stroke: 0.5px #ffcc00;
+	text-stroke: 0.5px #ffcc00;
 }
 .away {
 	background-color: gray;
