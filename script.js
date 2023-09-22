@@ -1,3 +1,5 @@
+var dayOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+var day = dayOfWeek[(new Date()).getDay()].toLowerCase();
 const baseURL = "https://statsapi.mlb.com";
 var vars;
 var uRL;
@@ -38,6 +40,10 @@ function runGD(url) {
 	run = setInterval(gameDay,10000);
 }
 function pitchDisplay(game,ha) {
+	var dayNight = game.gameData.datetime.dayNight;
+	var tmCode = game.gameData.teams[ha].fileCode;
+	document.getElementById(ha).className = tmCode + " " + ha + " " + dayNight + " " + day;
+	document.getElementById(ha + "WPSpan").className = tmCode + " " + ha + " " + dayNight + " " + day;
 	// vars = game;
 	var isPitch = game.liveData.linescore.isTopInning == (ha == "home");
 	console.log(ha);
