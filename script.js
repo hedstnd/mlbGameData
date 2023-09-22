@@ -7,15 +7,17 @@ var uRL;
 window.onload = function() {
 	getData(baseURL + "/api/v1/schedule?sportId=1").then((value) => {
 		console.log(value);
-		g = value.dates[0].games.filter(e => e.status.statusCode == "I");
+		g = value.dates[0].games.filter(e => e.status.statusCode == "I" || e.status.statusCode == "P");
 		tab = document.createElement("table");
 		for (var i = 0; i < g.length/3; i++) {
 			row = document.createElement("tr");
 			for (var j = i * 3; j < i*3+3 && j < g.length; j++) {
-				game = document.createElement("td");
-				game.innerText = g[j].teams.away.team.name + " " + g[j].teams.away.score + " @ " + g[j].teams.home.team.name + " " + g[j].teams.home.score;
-				game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
-				row.appendChild(game);
+				if (g[j].teams.away.score!=null && g[j].teams.home.score!=null) {
+					game = document.createElement("td");
+					game.innerText = g[j].teams.away.team.name + " " + g[j].teams.away.score + " @ " + g[j].teams.home.team.name + " " + g[j].teams.home.score;
+					game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
+					row.appendChild(game);
+				}
 			}
 			tab.appendChild(row);
 		}
