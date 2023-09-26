@@ -11,6 +11,31 @@ body {
 	src: 
 		url('Factoria-Demi.ttf');
 }
+.base {
+	position: absolute;
+	/* mix-blend-mode: difference; */
+	left: 50dvw;
+	top: 10dvh;
+	font-size: 3rem;
+	color: lightgray !important;
+	-webkit-text-stroke: 1px black !important;
+}
+.base::after {
+	content: '\25c7';
+}
+.base.runner::after {
+	content: '\25c6';
+	color: gold;
+}
+#firstBase {
+	transform: translateX(0%);
+}
+#thirdBase {
+	transform: translateX(-100%);
+}
+#secondBase {
+	transform: translate(-50%,-30%);
+}
 #game {
 	display: none;
 	margin-left: auto;
@@ -32,6 +57,7 @@ body {
 	border: 1px solid;
 	border-collapse: collapse;
 	/* width: 11dvw; */
+	cursor: pointer;
 }
 #away,#home {
 	max-height: 96.3dvh;
@@ -76,11 +102,21 @@ ul {
 .vertJust h3 {
 	margin: 0px;
 }
-#away .winProb {
+#away .winProb, #innNum {
 	text-align: left;
+	float: left;
 }
-#home .winProb {
+#home .winProb, #topBot {
 	text-align: right;
+	float: right;
+}
+#topBot {
+	right: 50.25dvw;
+	position: absolute;
+}
+#innNum {
+	left: 50.25dvw;
+	position: absolute;
 }
 #homeScore, #awayName {
 	float: left;
@@ -462,8 +498,9 @@ p {
 }
 .oak.away {
 	color: #003831;
-	-webkit-text-stroke:1px #efb21e;
-	text-stroke:1px #efb21e;
+	/* -webkit-text-stroke:1px #efb21e; */
+	/* text-stroke:1px #efb21e; */
+	text-shadow: 1px 0 0 #efb21e, 0 1px 0 #efb21e, -1px 0 0 #efb21e, 0 -1px 0 #efb21e;
 }
 .pit.home {
 	/* -webkit-text-stroke: 0.5px #fdb827; */

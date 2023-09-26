@@ -6,7 +6,7 @@ const baseURL = "https://statsapi.mlb.com";
 var vars;
 var uRL;
 window.onload = function() {
-	getData(baseURL + "/api/v1/schedule?sportId=1").then((value) => {
+	getData(baseURL + "/api/v1/schedule?sportId=1&hydrate=linescore").then((value) => {
 		console.log(value);
 		g = value.dates[0].games.filter(e => e.status.statusCode == "I" || e.status.statusCode == "PW" || e.status.statusCode == "P");
 		tab = document.createElement("table");
@@ -18,9 +18,16 @@ window.onload = function() {
 					if (g[j].status.statusCode == "P") {
 						game.innerHTML = g[j].teams.away.team.name + " @ " + g[j].teams.home.team.name + "<br/>First Pitch: " + getGameTime(g[j].gameDate);
 					} else {
-						game.innerHTML = g[j].teams.away.team.name + " " + g[j].teams.away.score + " @ " + g[j].teams.home.team.name + " " + g[j].teams.home.score;
+						game.innerHTML = g[j].teams.away.team.name + " " + g[j].teams.away.score + " @ " + g[j].teams.home.team.name + " " + g[j].teams.home.score+"<br/>"+g[j].linescore.inningState+ " " + g[j].linescore.currentInningOrdinal + ", " + g[j].linescore.outs + " outs";
 					}
 					game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
+					row.appendChild(game);
+				} else if (g[j].status.statusCode == "P") {
+					game = document.createElement("td");
+					game.innerHTML = g[j].teams.away.team.name + " @ " + g[j].teams.home.team.name + "<br/>First Pitch: " + getGameTime(g[j].gameDate);
+					if (g[j].linescore.offense.battingOrder && g[j].linescore.defense.battingOrder) {
+						game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
+					}
 					row.appendChild(game);
 				}
 			}
@@ -52,7 +59,37 @@ function runGD(url) {
 	run = setInterval(gameDay,10000);
 }
 function pitchDisplay(game,ha) {
+	var r1;
+	var r2;
+	var r3;
+	var loaded;
+	var risp2;
+	var r3l2;
+	document.getElementById("topBot").innerText = game.liveData.linescore.inningState;
+	document.getElementById("innNum").innerText = game.liveData.linescore.currentInningOrdinal;
 	document.getElementById(ha+"WPImg").src = "https://midfield.mlbstatic.com/v1/team/"+game.gameData.teams[ha].id+"/spots/144";
+	if (game.liveData.linescore.offense.first) {
+		document.getElementById("firstBase").className+= " runner";
+		r1 = true;
+		console.log("runner first");
+	} else {
+		document.getElementById("firstBase").className = document.getElementById("firstBase").className.replaceAll(" runner","");
+		r1 = false;
+	}
+	if (game.liveData.linescore.offense.second) {
+		document.getElementById("secondBase").className+= " runner";
+		r2 = true;
+	} else {
+		document.getElementById("secondBase").className = document.getElementById("secondBase").className.replaceAll(" runner","");
+		r2 = false;
+	}
+	if (game.liveData.linescore.offense.third) {
+		document.getElementById("thirdBase").className+= " runner";
+		r3 = true;
+	} else {
+		document.getElementById("thirdBase").className = document.getElementById("thirdBase").className.replaceAll(" runner","");
+		r3 = false;
+	}
 	var dayNight = game.gameData.datetime.dayNight;
 	var tmCode = game.gameData.teams[ha].fileCode;
 	document.getElementById(ha).className = tmCode + " " + ha + " " + dayNight + " " + day;
@@ -99,7 +136,18 @@ function pitchDisplay(game,ha) {
 	if (isPitch) {
 		search = baseURL + "/api/v1/people/"+ pitchID + "?hydrate=stats(group=pitching,type=[seasonAdvanced,pitchArsenal,sabermetrics,statSplits,statSplitsAdvanced],sitCodes="+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)+")"
 	} else {
-		search = baseURL + "/api/v1/people/"+pitchID+"?hydrate=stats(group=hitting,type=[seasonAdvanced,statSplits,sabermetrics,statSplitsAdvanced],sitCodes=["+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.batter)+",c"+game.liveData.plays.currentPlay.count.balls + game.liveData.plays.currentPlay.count.strikes+"])";
+		search = baseURL + "/api/v1/people/"+pitchID+"?hydrate=stats(group=hitting,type=[seasonAdvanced,statSplits,sabermetrics,statSplitsAdvanced],sitCodes=["+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.batter)+",c"+game.liveData.plays.currentPlay.count.balls + game.liveData.plays.currentPlay.count.strikes;
+		if (r1 && r2 && r3) {
+			search+=",r123";
+			loaded = true;
+		} else if ((r2 || r3) && game.liveData.linescore.outs == 2) {
+			search+= ",risp2";
+			risp2 = true;
+		} else if (r3 && game.liveData.linescore.outs < 2) {
+			search+= ",r3l2";
+			r3l2 = true;
+		}
+		search+= "])";
 	}
 	// var wP;
 	getData(search).then((value) => {
@@ -154,6 +202,14 @@ function pitchDisplay(game,ha) {
 			}
 			if (game.liveData.linescore.currentInning>= 9 && !game.liveData.linescore.isTopInning && game.liveData.plays.currentPlay.runners.length > (game.liveData.linescore.teams.away.runs - game.liveData.linescore.teams.home.runs)) {
 				hand.innerHTML+= "<br>"+val.seasonAdvanced.walkOffs+ " walk-offs";
+			}
+			if (loaded) {
+				//avg, ops, hr, rbi, pa
+				hand.innerHTML += "</p><h3>Bases Loaded</h3><p>"+val.statSplits["r123"].avg + " AVG&emsp;"+val.statSplits["r123"].ops+ " OPS&emsp;"+val.statSplits.r123.homeRuns + " HR&emsp;" + val.statSplits.r123.rbi + " RBI&emsp;"+ val.statSplits.r123.plateAppearances + " PA";
+			} else if (risp2) {
+				hand.innerHTML += "</p><h3>RISP, 2 out</h3><p>"+val.statSplits["risp2"].avg + " AVG&emsp;"+val.statSplits["risp2"].ops+ " OPS&emsp;"+val.statSplitsAdvanced.risp2.extraBaseHits + " XBH&emsp;" + val.statSplitsAdvanced.risp2.leftOnBase + " LOB&emsp;"+ val.statSplitsAdvanced.risp2.plateAppearances + " PA";
+			} else if (r3l2) {
+				hand.innerHTML += "</p><h3>Runner on 3rd, &lt;2 out</h3><p>"+val.statSplits["r3l2"].avg + " AVG&emsp;"+val.statSplits["r3l2"].ops+ " OPS&emsp;"+val.statSplitsAdvanced.r3l2.extraBaseHits + " XBH&emsp;" + val.statSplitsAdvanced.r3l2.leftOnBase + " LOB&emsp;"+ val.statSplitsAdvanced.r3l2.plateAppearances + " PA";
 			}
 		}
 		// var duh = document.createElement("h3");
@@ -267,6 +323,9 @@ function getPhotoUrl(id) {
 function getGameTime(dt) {
 	var gTime = dt.substring(11).split(":");
 	gTime[0] = (parseInt(gTime[0]) - timeOffset);
+	if (gTime[0] < 0) {
+		gTime[0] += 24;
+	}
 	if (gTime[0] < 12) {
 		gTime[2] = " AM";
 	} else {
