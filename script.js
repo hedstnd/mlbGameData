@@ -1,5 +1,6 @@
 var dayOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 var day = dayOfWeek[(new Date()).getDay()].toLowerCase();
+var timeOffset = (new Date()).getTimezoneOffset() / 60;
 var twos = ["home","away"];
 const baseURL = "https://statsapi.mlb.com";
 var vars;
@@ -7,21 +8,29 @@ var uRL;
 window.onload = function() {
 	getData(baseURL + "/api/v1/schedule?sportId=1").then((value) => {
 		console.log(value);
-		g = value.dates[0].games.filter(e => e.status.statusCode == "I" || e.status.statusCode == "PW");
+		g = value.dates[0].games.filter(e => e.status.statusCode == "I" || e.status.statusCode == "PW" || e.status.statusCode == "P");
 		tab = document.createElement("table");
 		for (var i = 0; i < g.length/3; i++) {
 			row = document.createElement("tr");
 			for (var j = i * 3; j < i*3+3 && j < g.length; j++) {
 				if (g[j].teams.away.score!=null && g[j].teams.home.score!=null) {
 					game = document.createElement("td");
-					game.innerText = g[j].teams.away.team.name + " " + g[j].teams.away.score + " @ " + g[j].teams.home.team.name + " " + g[j].teams.home.score;
+					if (g[j].status.statusCode == "P") {
+						game.innerHTML = g[j].teams.away.team.name + " @ " + g[j].teams.home.team.name + "<br/>First Pitch: " + getGameTime(g[j].gameDate);
+					} else {
+						game.innerHTML = g[j].teams.away.team.name + " " + g[j].teams.away.score + " @ " + g[j].teams.home.team.name + " " + g[j].teams.home.score;
+					}
 					game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
 					row.appendChild(game);
 				}
 			}
 			tab.appendChild(row);
 		}
+		// document.getElementById("scores").innerHTML = "";
 		document.getElementById("scores").appendChild(tab);
+		if (g.length == 0) {
+			document.getElementById("scores").innerHTML = "<table><td>No active games</td></table>";
+		}
 });
 }
 function gameDay() {
@@ -149,27 +158,32 @@ function pitchDisplay(game,ha) {
 		}
 		// var duh = document.createElement("h3");
 		// duh.innerText = "DUE UP";
-		var due = document.getElementById(ha+"Due");//createElement("span");
-		due.className = "dueUp";
-		var pics = [];
-		due.innerHTML = "";
-		for (var i = 0; i < 3; i++) {
-			pics[i] = document.createElement("img");
-			due.appendChild(pics[i]);
-		}
-		if ((isPitch && game.liveData.linescore.outs < 3 )|| (!isPitch && game.liveData.linescore.outs == 3 && (game.gameData.status.statusCode != "F" && game.gameData.status.statusCode != "O"))) {
-			pics[0].src = getPhotoUrl(game.liveData.linescore.defense.batter.id);
-			pics[1].src = getPhotoUrl(game.liveData.linescore.defense.onDeck.id);
-			pics[2].src = getPhotoUrl(game.liveData.linescore.defense.inHole.id);
-		}  else if (isPitch && game.liveData.linescore.outs == 3) {
-			pics[0].src = getPhotoUrl(game.liveData.linescore.offense.batter.id);
-			pics[1].src = getPhotoUrl(game.liveData.linescore.offense.onDeck.id);
-			pics[2].src = getPhotoUrl(game.liveData.linescore.offense.inHole.id);
-		}
-		else {
-			pics[0].src="";
-			pics[1].src = getPhotoUrl(game.liveData.linescore.offense.onDeck.id);
-			pics[2].src = getPhotoUrl(game.liveData.linescore.offense.inHole.id);
+		if (game.gameData.status.statusCode != "O" && game.gameData.status.statusCode != "F") {
+			var due = document.getElementById(ha+"Due");//createElement("span");
+			due.className = "dueUp";
+			var pics = [];
+			due.innerHTML = "";
+			for (var i = 0; i < 3; i++) {
+				pics[i] = document.createElement("img");
+				due.appendChild(pics[i]);
+			}
+			if ((isPitch && game.liveData.linescore.outs < 3 )|| (!isPitch && game.liveData.linescore.outs == 3 && (game.gameData.status.statusCode != "F" && game.gameData.status.statusCode != "O"))) {
+				pics[0].src = getPhotoUrl(game.liveData.linescore.defense.batter.id);
+				pics[1].src = getPhotoUrl(game.liveData.linescore.defense.onDeck.id);
+				pics[2].src = getPhotoUrl(game.liveData.linescore.defense.inHole.id);
+			}  else if (isPitch && game.liveData.linescore.outs == 3) {
+				pics[0].src = getPhotoUrl(game.liveData.linescore.offense.batter.id);
+				pics[1].src = getPhotoUrl(game.liveData.linescore.offense.onDeck.id);
+				pics[2].src = getPhotoUrl(game.liveData.linescore.offense.inHole.id);
+			}
+			else {
+				pics[0].src="";
+				pics[1].src = getPhotoUrl(game.liveData.linescore.offense.onDeck.id);
+				pics[2].src = getPhotoUrl(game.liveData.linescore.offense.inHole.id);
+			}
+		} else {
+			document.getElementById(ha+"Duh").innerText = "";
+			document.getElementById(ha+"Due").innerHTML="";
 		}
 		var bph = document.getElementById(ha+"BenchPen");//createElement("h3");
 		if (isPitch) {
@@ -249,6 +263,16 @@ function makeSplitsWork(data) {
 }
 function getPhotoUrl(id) {
 	return "https://midfield.mlbstatic.com/v1/people/"+id+"/silo/360";
+}
+function getGameTime(dt) {
+	var gTime = dt.substring(11).split(":");
+	gTime[0] = (parseInt(gTime[0]) - timeOffset);
+	if (gTime[0] < 12) {
+		gTime[2] = " AM";
+	} else {
+		gTime[2] = " PM";
+	}
+	return (gTime[0] % 12) + ":" + gTime[1] + gTime[2];
 }
 async function getData(url) {
 	var ret;

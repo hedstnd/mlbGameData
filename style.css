@@ -18,6 +18,11 @@ body {
 	margin-top: 0;
 	margin-bottom: 0;
 }
+#scores img {
+	height: 1rem;
+	width: auto;
+	float: left;
+}
 #scores table {
 	max-width: 33%;
 	margin: auto;
@@ -26,9 +31,10 @@ body {
 #scores td {
 	border: 1px solid;
 	border-collapse: collapse;
+	/* width: 11dvw; */
 }
 #away,#home {
-	max-height: 96vh;
+	max-height: 96.3dvh;
 	/*display: inline;*/
 	width: 50vw;
 	text-align: center;
@@ -65,7 +71,7 @@ ul {
 .vertJust {
 	display: grid;
 	justify-content: center;
-	height: 96vh;
+	height: 96.3dvh;
 }
 .vertJust h3 {
 	margin: 0px;
@@ -83,7 +89,7 @@ ul {
 	float: right;
 }
 #games {
-	height: 100vh;
+	height: 100dvh;
 	margin: 0;
 	padding: 0;
 }
@@ -130,7 +136,7 @@ p {
 	margin-top: 0;
 }
 #homeWPImg, #awayWPImg {
-	height: 3vh;
+	height: 3dvh;
 	width: auto;
 }
 .away {
@@ -144,12 +150,11 @@ p {
 	text-shadow: 0.5px 0 0 #284898, 0 0.5px 0 #284898, -0.5px 0 0 #284898, 0 -0.5px 0 #284898;
 }
 .phi.home.day #homeWPImg {
-	content: url('https://www.mlbstatic.com/team-logos/team-cap-on-light/143.svg');
+	content: url('logos/phi-day.png');
 	background-color: #284898 !important;
 	border-radius: 50% !important;
-	width: 3vh !important;
-	padding-left: .25% !important;
-	padding-right: .25% !important;
+	height: 3dvh !important;
+	width: auto;
 }
 .phi.home.thursday {
 	color: #6f263d  !important;
@@ -159,7 +164,7 @@ p {
 	content: url('logos/phi-thurs.png');
 	background-color: #6f263d !important;
 	border-radius: 50% !important;
-	width: 3vh !important;
+	width: 3dvh !important;
 }
 .phi.home {
 	background-color: #fff;
@@ -207,9 +212,9 @@ p {
 }
 .tex.home.friday #homeWPImg, .tex.home.saturday #homeWPImg {
 	content: url('logos/tex-fri-sat.png');
-	height: 2.5vh;
+	height: 2.5dvh;
 	width: auto;
-	padding: .25vh;
+	padding: .25dvh;
 	border-radius: 50%;
 	background-color: black;
 }
@@ -287,7 +292,7 @@ p {
 	content: url('logos/cws-sun.png');
 	background-color: #cc092f;
 	border-radius: 50%;
-	width: 3vh;
+	width: 3dvh;
 	height: auto;
 }
 .chc.home {
@@ -421,7 +426,7 @@ p {
 }
 .mil.home.friday #homeWPImg {
 	content: url('logos/mil-home-fri.png');
-	height: 3vh;
+	height: 3dvh;
 	width: auto;
 }
 .mil.home.friday p, .mil.home.friday h3,.mil.home.friday h2,.mil.home.friday #homeWP, .mil.home.friday ul {
