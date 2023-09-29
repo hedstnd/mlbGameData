@@ -5,6 +5,7 @@ html {
 body {
 	margin: 0;
 	font-family: "Factoria";
+	touch-action: pan-y;
 }
 @font-face {
 	font-family: "Factoria";
@@ -19,6 +20,7 @@ body {
 	font-size: 3rem;
 	color: lightgray !important;
 	-webkit-text-stroke: 1px black !important;
+	text-shadow: none !important;
 }
 .base::after {
 	content: '\25c7';
@@ -34,7 +36,7 @@ body {
 	transform: translateX(-100%);
 }
 #secondBase {
-	transform: translate(-50%,-30%);
+	transform: translate(-50%,-32%);
 }
 #game {
 	display: none;
@@ -49,22 +51,37 @@ body {
 	float: left;
 }
 #scores table {
-	max-width: 33%;
+	max-width: 40%;
 	margin: auto;
 	margin-top: 3rem;
 }
+#scores table, #scores td, #scores tr {
+	border-collapse: separate !important;
+	/* border-spacing: 0; */
+		border-spacing: 0.5rem;
+}
 #scores td {
 	border: 1px solid;
-	border-collapse: collapse;
+	/* border-right: 1px solid; */
+	border-collapse: separate !important;
+	border-radius: 10px;
 	/* width: 11dvw; */
 	cursor: pointer;
+	padding: 5px;
+}
+#scores td:first-child {
+	/* border-left: 1px solid; */
+}
+#scores tr:first-child td {
+	/* border-top: 1px solid; */
 }
 #away,#home {
 	max-height: 96.3dvh;
 	/*display: inline;*/
-	width: 50vw;
+	width: 50dvw;
 	text-align: center;
 	overflow-y: hidden;
+	overflow: scroll;
 	
 }
 #away img, #home img {
@@ -160,7 +177,7 @@ ul {
 table, td, tr {
 	border-collapse: collapse;
 }
-tr:last-child td, tr:last-child{
+#game tr:last-child td, tr:last-child{
 	border-top: 1px solid black;
 }
 /* #slider::-webkit-progress-value , #slider::-moz-progress-bar { */
@@ -459,6 +476,7 @@ p {
 .mil.home.friday {
 	background-color: #74b0e6;
 	color: #ffc52f;
+	text-shadow: -2px 2px #12284b;
 }
 .mil.home.friday #homeWPImg {
 	content: url('logos/mil-home-fri.png');
@@ -466,7 +484,7 @@ p {
 	width: auto;
 }
 .mil.home.friday p, .mil.home.friday h3,.mil.home.friday h2,.mil.home.friday #homeWP, .mil.home.friday ul {
-	filter: drop-shadow(-2px 2px #12284b);
+	/* filter: drop-shadow(-2px 2px #12284b); */
 	-webkit-text-stroke: unset;
 }
 .mil.home.friday p h3 {
@@ -483,7 +501,10 @@ p {
 	color: #002b5c;
 }
 .nyy {
-	color: #0c2340;
+	color: #0c2340 !important;
+}
+.nyy.away {
+	text-shadow: 1px 0 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
 }
 .nym.home {
 	background-color: #002d72;
@@ -570,4 +591,47 @@ p {
 .away {
 	background-color: gray;
 	color: white;
+}
+/* #scores table, #scores tr:first-child td:first-child { */
+	/* border-top-left-radius: 10px; */
+/* } */
+/* #scores table, #scores tr:last-child td:first-child { */
+	/* border-bottom-left-radius: 10px; */
+/* } */
+/* #scores table, #scores tr:first-child td:last-child { */
+	/* border-top-right-radius: 10px; */
+/* } */
+/* #scores table, #scores tr:last-child td:nth-child(3) { */
+	/* border-bottom-right-radius: 10px; */
+/* } */
+#popUp {
+	position: fixed;
+	background-color: rgba(0,0,0,0.7);
+	left: 50dvw;
+	top: 50dvh;
+	transform: translate(-50%, -50%);
+	height: 50dvh;
+	width: 50dvw;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	text-align: center;
+	display: none;
+	color: white;
+	border-radius: 15px;
+}
+#popUp p {
+	font-size: 2rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+#close::after {
+	content: '\d7';
+}
+#close {
+	display: block;
+	float: right;
+	font-size: 1.5rem;
+	margin-right: 2%;
 }

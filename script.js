@@ -5,10 +5,11 @@ var twos = ["home","away"];
 const baseURL = "https://statsapi.mlb.com";
 var vars;
 var uRL;
+var hideCode = "";
 window.onload = function() {
 	getData(baseURL + "/api/v1/schedule?sportId=1&hydrate=linescore").then((value) => {
 		console.log(value);
-		g = value.dates[0].games.filter(e => e.status.statusCode == "I" || e.status.statusCode == "PW" || e.status.statusCode == "P");
+		g = value.dates[0].games.filter(e => e.status.statusCode != "S" && e.status.codedGameState != "F");
 		tab = document.createElement("table");
 		for (var i = 0; i < g.length/3; i++) {
 			row = document.createElement("tr");
@@ -19,8 +20,15 @@ window.onload = function() {
 						game.innerHTML = g[j].teams.away.team.name + " @ " + g[j].teams.home.team.name + "<br/>First Pitch: " + getGameTime(g[j].gameDate);
 					} else {
 						game.innerHTML = g[j].teams.away.team.name + " " + g[j].teams.away.score + " @ " + g[j].teams.home.team.name + " " + g[j].teams.home.score+"<br/>"+g[j].linescore.inningState+ " " + g[j].linescore.currentInningOrdinal + ", " + g[j].linescore.outs + " outs";
+						if (g[j].status.statusCode != g[j].status.codedGameState) {
+							game.innerHTML+= " ("+g[j].status.detailedState+")";
+						}
 					}
 					game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
+					row.appendChild(game);
+				}  else if (g[j].status.statusCode != g[j].status.codedGameState) {
+					game = document.createElement("td");
+					game.innerHTML = g[j].teams.away.team.name + " @ " + g[j].teams.home.team.name + "<br/>" + g[j].status.detailedState + " - " + g[j].status.reason;
 					row.appendChild(game);
 				} else if (g[j].status.statusCode == "P") {
 					game = document.createElement("td");
@@ -65,6 +73,21 @@ function pitchDisplay(game,ha) {
 	var loaded;
 	var risp2;
 	var r3l2;
+	var popUp = document.getElementById("popText");
+	if (game.gameData.status.statusCode != "I" && game.gameData.status.statusCode != "PW" && game.gameData.status.statusCode != hideCode) {
+		popUp.parentElement.style.display = "block";
+		popUp.innerText = game.gameData.status.detailedState;
+		if (game.gameData.status.statusCode == "P") {
+			popUp.innerHTML += "<br/>First Pitch: " + getGameTime(game.gameData.datetime.dateTime);
+		}
+		document.getElementById("close").setAttribute("onclick","hideModal(\""+game.gameData.status.statusCode+"\")");
+	} else {
+		popUp.style.display = "none";
+		popUp.innerHTML = "";
+		if (hideCode != game.gameData.status.statusCode) {
+			hideCode = "";
+		}
+	}
 	document.getElementById("topBot").innerText = game.liveData.linescore.inningState;
 	document.getElementById("innNum").innerText = game.liveData.linescore.currentInningOrdinal;
 	document.getElementById(ha+"WPImg").src = "https://midfield.mlbstatic.com/v1/team/"+game.gameData.teams[ha].id+"/spots/144";
@@ -284,8 +307,10 @@ function pitchDisplay(game,ha) {
 			if (valCM[twos[i] + "WinProbability"] <= 2) {
 				// document.getElementById(twos[i]+"WPSpan").innerHTML = wProbText;
 				document.getElementById(twos[i]+"WPImg").style.opacity = "0";
+				document.getElementById(twos[i]+"WPImg").style.display = "none";
 			} else {
 				document.getElementById(twos[i]+"WPImg").style.opacity = "1";
+				document.getElementById(twos[i]+"WPImg").style.display = "";
 			}
 		}
 	});
@@ -338,4 +363,72 @@ async function getData(url) {
 	var jso = await fetch(url);
 	ret = await jso.json();
 	return ret;
+}
+
+function abbrFromId(id) {
+	if (id == 133) {
+		return "OAK";
+	} else if (id == 134) {
+		return "PIT";
+	} else if (id == 135) {
+		return "SD";
+	} else if (id == 136) {
+		return "SEA";
+	} else if (id == 137) {
+		return "SF";
+	} else if (id == 138) {
+		return "STL";
+	} else if (id == 139) {
+		return "TB";
+	} else if (id == 140) {
+		return "TEX";
+	} else if (id == 141) {
+		return "TOR";
+	} else if (id == 142) {
+		return "MIN";
+	} else if (id == 143) {
+		return "PHI";
+	} else if (id == 144) {
+		return "ATL";
+	} else if (id == 145) {
+		return "CWS";
+	} else if (id == 146) {
+		return "MIA";
+	} else if (id == 147) {
+		return "NYY";
+	} else if (id == 158) {
+		return "MIL";
+	} else if (id == 108) {
+		return "LAA";
+	} else if (id == 109) {
+		return "ARI";
+	} else if (id == 110) {
+		return "BAL";
+	} else if (id == 111) {
+		return "BOS";
+	} else if (id == 112) {
+		return "CHC";
+	} else if (id == 113) {
+		return "CIN";
+	} else if (id == 114) {
+		return "CLE";
+	} else if (id == 115) {
+		return "COL";
+	} else if (id == 116) {
+		return "DET";
+	} else if (id == 117) {
+		return "HOU";
+	} else if (id == 118) {
+		return "KC";
+	} else if (id == 119) {
+		return "LAD";
+	} else if (id == 120) {
+		return "WAS";
+	} else if (id == 121) {
+		return "NYM";
+	}
+}
+function hideModal(code) {
+	document.getElementById("popUp").style.display = "none";
+	hideCode = code;
 }
