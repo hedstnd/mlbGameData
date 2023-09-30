@@ -82,7 +82,7 @@ function pitchDisplay(game,ha) {
 		}
 		document.getElementById("close").setAttribute("onclick","hideModal(\""+game.gameData.status.statusCode+"\")");
 	} else {
-		popUp.style.display = "none";
+		popUp.parentElement.style.display = "none";
 		popUp.innerHTML = "";
 		if (hideCode != game.gameData.status.statusCode) {
 			hideCode = "";
