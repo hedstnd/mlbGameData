@@ -103,6 +103,14 @@ td #away {
 	margin-left: auto;
 	margin-right: auto;
 }
+#awayNm::after, #homeNm::after {
+	content: '\a' attr(alt) '';
+	font-size: 0.75rem;
+}
+#awayNm, #homeNm {
+	margin-top:0;
+	padding-top: 0;
+}
 .dueUp img {
 	height: 4rem !important;
 }

@@ -148,6 +148,13 @@ function pitchDisplay(game,ha) {
 	}
 	var img = document.getElementById(ha+"Feat");//createElement("img");
 	img.setAttribute("src","https://midfield.mlbstatic.com/v1/people/"+pitchID+"/silo/360");
+	if (isPitch) {
+		img.setAttribute("alt",game.liveData.plays.currentPlay.matchup.pitcher.fullName);
+		document.getElementById(ha+"Nm").setAttribute("alt",game.liveData.plays.currentPlay.matchup.pitcher.fullName);
+	} else {
+		img.setAttribute("alt",game.liveData.plays.currentPlay.matchup.batter.fullName);
+		document.getElementById(ha+"Nm").setAttribute("alt",game.liveData.plays.currentPlay.matchup.batter.fullName);
+	}
 	//img.className = "featured";
 	var summ = document.getElementById(ha+"Summ");//createElement("p");
 	if (game.liveData.linescore.isTopInning == (ha == "home")) {
