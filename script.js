@@ -1,5 +1,5 @@
 var dayOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-var day = dayOfWeek[(new Date()).getDay()].toLowerCase();
+var day;// = dayOfWeek[(new Date()).getDay()].toLowerCase();
 var timeOffset = (new Date()).getTimezoneOffset() / 60;
 var twos = ["home","away"];
 const baseURL = "https://statsapi.mlb.com";
@@ -24,7 +24,11 @@ window.onload = function() {
 							game.innerHTML+= " ("+g[j].status.detailedState+")";
 						}
 					}
-					game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
+					if (g[j].gamedayType == "P") {
+						game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\",\""+ g[j].description +"\")");
+					} else {
+							game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
+					}
 					row.appendChild(game);
 				}  else if (g[j].status.statusCode != g[j].status.codedGameState) {
 					game = document.createElement("td");
@@ -34,7 +38,11 @@ window.onload = function() {
 					game = document.createElement("td");
 					game.innerHTML = g[j].teams.away.team.name + " @ " + g[j].teams.home.team.name + "<br/>First Pitch: " + getGameTime(g[j].gameDate);
 					if (g[j].linescore.offense.battingOrder && g[j].linescore.defense.battingOrder) {
-						game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
+						if (g[j].gamedayType == "P") {
+							game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\",\""+ g[j].description +"\")");
+						} else {
+								game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
+							}
 					}
 					row.appendChild(game);
 				}
@@ -61,9 +69,16 @@ function gameDay() {
 	});
 	
 }
-function runGD(url) {
+function runGD(url, desc="") {
 	uRL = url;
 	gameDay();
+	if (desc.length > 0) {
+		var splText = splitInHalf(desc);
+		document.getElementById("awayDesc").innerHTML = splText[0];
+		document.getElementById("awayDesc").after(document.createElement("br"));
+		document.getElementById("homeDesc").innerHTML = splText[1];
+		document.getElementById("homeDesc").after(document.createElement("br"));
+	}
 	run = setInterval(gameDay,10000);
 }
 function pitchDisplay(game,ha) {
@@ -114,6 +129,7 @@ function pitchDisplay(game,ha) {
 		r3 = false;
 	}
 	var dayNight = game.gameData.datetime.dayNight;
+	day = dayOfWeek[new Date(game.gameData.datetime.dateTime).getDay()].toLowerCase();
 	var tmCode = game.gameData.teams[ha].fileCode;
 	document.getElementById(ha).className = tmCode + " " + ha + " " + dayNight + " " + day;
 	document.getElementById(ha + "WPSpan").className = tmCode + " " + ha + " " + dayNight + " " + day;
@@ -438,4 +454,10 @@ function abbrFromId(id) {
 function hideModal(code) {
 	document.getElementById("popUp").style.display = "none";
 	hideCode = code;
+}
+function splitInHalf(string) {
+	var spl = [];
+	spl.push(string.substring(0,Math.round(string.length/2)));
+	spl.push(string.substring(Math.round(string.length/2)));
+	return spl;
 }

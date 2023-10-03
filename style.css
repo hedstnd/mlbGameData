@@ -16,7 +16,7 @@ body {
 	position: absolute;
 	/* mix-blend-mode: difference; */
 	left: 50dvw;
-	top: 10dvh;
+	top: 15dvh;
 	font-size: 3rem;
 	color: lightgray !important;
 	-webkit-text-stroke: 1px black !important;
@@ -141,6 +141,14 @@ ul {
 }
 #innNum {
 	left: 50.25dvw;
+	position: absolute;
+}
+#awayDesc {
+	position: absolute;
+	right: 50dvw;
+}
+#homeDesc {
+	left: 50dvw;
 	position: absolute;
 }
 #homeScore, #awayName {
@@ -294,8 +302,9 @@ p {
 	background-color: #14225a;
 }
 .was.home.friday, .was.home.saturday {
-	background-color: gray;
+	background-color: dimgray;
 	color: #fffdd0;
+	text-shadow: 1px 0 0 #14225a, 0 1px 0 #14225a, 0 -1px 0 #14225a, -1px 0 0 #14225a, -1.5px 1.5px 0 #ffb7ae;
 }
 .was.home.friday, .was.home.saturday #homeWPImg {
 	content: url('logos/was-fri-sat.png');
@@ -513,6 +522,7 @@ p {
 }
 .nyy.away {
 	text-shadow: 1px 0 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+	background-color: gray;
 }
 .nym.home {
 	background-color: #002d72;
