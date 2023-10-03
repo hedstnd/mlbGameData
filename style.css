@@ -151,6 +151,9 @@ ul {
 	left: 50dvw;
 	position: absolute;
 }
+#homeDesc, #awayDesc {
+	top: 27dvh;
+}
 #homeScore, #awayName {
 	float: left;
 }
@@ -259,6 +262,22 @@ p {
 }
 .tb.home {
 	background-color: #8fbce6;
+}
+.tb.home.friday {
+	background-color: #fff;
+	background: linear-gradient(65deg, #580099 30%, green 50%, #f5d130 60%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+}
+.tb.home.friday #innNum, .tb.home.friday #homeWP, .tb.home.friday #homeDesc, .tb.home.friday #homeScore, .tb.home.friday #homeName {
+	background: linear-gradient(65deg, #580099 15%, green 50%, #f5d130 80%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+}
+.tb.home.friday #homeWPImg {
+	content: url('logos/tb-fri.png');
 }
 .tb {
 	color: #092c5c;

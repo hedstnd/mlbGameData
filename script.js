@@ -75,9 +75,9 @@ function runGD(url, desc="") {
 	if (desc.length > 0) {
 		var splText = splitInHalf(desc);
 		document.getElementById("awayDesc").innerHTML = splText[0];
-		document.getElementById("awayDesc").after(document.createElement("br"));
+		// document.getElementById("awayDesc").after(document.createElement("br"));
 		document.getElementById("homeDesc").innerHTML = splText[1];
-		document.getElementById("homeDesc").after(document.createElement("br"));
+		// document.getElementById("homeDesc").after(document.createElement("br"));
 	}
 	run = setInterval(gameDay,10000);
 }
