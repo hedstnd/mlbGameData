@@ -111,11 +111,11 @@ function pitchDisplay(game,ha) {
 		document.getElementById("firstBase").className+= " runner";
 		r1 = true;
 		console.log("runner first");
-		 r.style.setProperty("--first","url("+getPhotoUrl(game.liveData.linescore.offense.first.id)+")");
+		r.style.setProperty("--first","url("+getPhotoUrl(game.liveData.linescore.offense.first.id)+")");
 	} else {
 		document.getElementById("firstBase").className = document.getElementById("firstBase").className.replaceAll(" runner","");
 		r1 = false;
-		// document.getElementById("firstBase").style.backgroundImage = "none";
+		r.style.setProperty("--first","url()");
 	}
 	if (game.liveData.linescore.offense.second) {
 		document.getElementById("secondBase").className+= " runner";
@@ -124,7 +124,7 @@ function pitchDisplay(game,ha) {
 	} else {
 		document.getElementById("secondBase").className = document.getElementById("secondBase").className.replaceAll(" runner","");
 		r2 = false;
-		// document.getElementById("secondBase").style.backgroundImage = "none";
+		r.style.setProperty("--second","url()");
 	}
 	if (game.liveData.linescore.offense.third) {
 		document.getElementById("thirdBase").className+= " runner";
@@ -133,7 +133,7 @@ function pitchDisplay(game,ha) {
 	} else {
 		document.getElementById("thirdBase").className = document.getElementById("thirdBase").className.replaceAll(" runner","");
 		r3 = false;
-		// document.getElementById("thirdBase").style.backgroundImage = "none";
+		r.style.setProperty("--third","url()");
 	}
 	var dayNight = game.gameData.datetime.dayNight;
 	day = dayOfWeek[new Date(game.gameData.datetime.dateTime).getDay()].toLowerCase();
