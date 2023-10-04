@@ -6,6 +6,7 @@ const baseURL = "https://statsapi.mlb.com";
 var vars;
 var uRL;
 var hideCode = "";
+var r = document.querySelector(':root');
 window.onload = function() {
 	getData(baseURL + "/api/v1/schedule?sportId=1&hydrate=linescore").then((value) => {
 		console.log(value);
@@ -24,7 +25,7 @@ window.onload = function() {
 							game.innerHTML+= " ("+g[j].status.detailedState+")";
 						}
 					}
-					if (g[j].gamedayType == "P") {
+					if (g[j].gameType != "R" && g[j].gameType != "S") {
 						game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\",\""+ g[j].description +"\")");
 					} else {
 							game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
@@ -110,23 +111,29 @@ function pitchDisplay(game,ha) {
 		document.getElementById("firstBase").className+= " runner";
 		r1 = true;
 		console.log("runner first");
+		 r.style.setProperty("--first","url("+getPhotoUrl(game.liveData.linescore.offense.first.id)+")");
 	} else {
 		document.getElementById("firstBase").className = document.getElementById("firstBase").className.replaceAll(" runner","");
 		r1 = false;
+		// document.getElementById("firstBase").style.backgroundImage = "none";
 	}
 	if (game.liveData.linescore.offense.second) {
 		document.getElementById("secondBase").className+= " runner";
 		r2 = true;
+		r.style.setProperty("--second","url("+getPhotoUrl(game.liveData.linescore.offense.second.id)+")");
 	} else {
 		document.getElementById("secondBase").className = document.getElementById("secondBase").className.replaceAll(" runner","");
 		r2 = false;
+		// document.getElementById("secondBase").style.backgroundImage = "none";
 	}
 	if (game.liveData.linescore.offense.third) {
 		document.getElementById("thirdBase").className+= " runner";
 		r3 = true;
+		r.style.setProperty("--third","url("+getPhotoUrl(game.liveData.linescore.offense.third.id)+")");
 	} else {
 		document.getElementById("thirdBase").className = document.getElementById("thirdBase").className.replaceAll(" runner","");
 		r3 = false;
+		// document.getElementById("thirdBase").style.backgroundImage = "none";
 	}
 	var dayNight = game.gameData.datetime.dayNight;
 	day = dayOfWeek[new Date(game.gameData.datetime.dateTime).getDay()].toLowerCase();
@@ -330,10 +337,10 @@ function pitchDisplay(game,ha) {
 			if (valCM[twos[i] + "WinProbability"] <= 2) {
 				// document.getElementById(twos[i]+"WPSpan").innerHTML = wProbText;
 				document.getElementById(twos[i]+"WPImg").style.opacity = "0";
-				document.getElementById(twos[i]+"WPImg").style.display = "none";
+				document.getElementById(twos[i]+"WPImg").style.width = "0";
 			} else {
 				document.getElementById(twos[i]+"WPImg").style.opacity = "1";
-				document.getElementById(twos[i]+"WPImg").style.display = "";
+				document.getElementById(twos[i]+"WPImg").style.width = "3dvh";
 			}
 		}
 	});
