@@ -10,7 +10,11 @@ var r = document.querySelector(':root');
 window.onload = function() {
 	getData(baseURL + "/api/v1/schedule?sportId=1&hydrate=linescore").then((value) => {
 		console.log(value);
-		g = value.dates[0].games.filter(e => e.status.statusCode != "S" && e.status.codedGameState != "F");
+		if (value.dates.length > 0) {
+			g = value.dates[0].games.filter(e => e.status.statusCode != "S" && e.status.codedGameState != "F");
+		} else {
+			g = [];
+		}
 		tab = document.createElement("table");
 		for (var i = 0; i < g.length/3; i++) {
 			row = document.createElement("tr");

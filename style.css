@@ -3,7 +3,20 @@
 	--first: url('');
 	--third: url('');
 }
-
+#scores::before {
+	background-image: url('https://img.mlbstatic.com/mlb-images/image/upload/t_2x1/t_w1536/mlb/owgfkohnpj1yxwhwpy0w.jpg');
+	filter: blur(20px);
+	-webkit-filter: blur(20px);
+	position: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100dvh;
+	width: 100dvw;
+	z-index: -1;
+	content:"";
+	background-position: center;
+	top:0;
+}
 html {
   height: 100%;
   width: 100%;
@@ -40,6 +53,7 @@ body {
 	background-repeat: no-repeat;
 	background-position: 50% 73%;
 	background-color: gold;
+	background-origin: content-box;
 }
 #firstBase {
 	transform: translateX(0%);
@@ -89,6 +103,8 @@ body {
 	/* width: 11dvw; */
 	cursor: pointer;
 	padding: 5px;
+	backdrop-filter: contrast(80%);
+	-webkit-backdrop-filter: contrast(80%);
 }
 #scores td:first-child {
 	/* border-left: 1px solid; */
