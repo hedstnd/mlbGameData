@@ -208,6 +208,13 @@ function pitchDisplay(game,ha) {
 	}
 	// var wP;
 	getData(search).then((value) => {
+		var srch;
+		if (!isPitch) {
+			srch = baseURL + "/api/v1/stats?group=hitting&sportIds=1&stats=metricAverages&personId="+pitchID+"&metrics=launchSpeed,launchAngle,distance";
+		} else {
+			srch = baseURL + "/api/v1/stats?group=pitching&sportIds=1&stats=metricAverages&metrics=releaseSpinRate&personId="+pitchID;
+		}
+		getData(srch).then((met) => {
 		console.log(value);
 		var val = makeSplitsWork(value.people[0].stats);
 		console.log(val);
@@ -217,7 +224,9 @@ function pitchDisplay(game,ha) {
 			pitches.innerHTML = "";
 			for (var i = 0; i < val.pitchArsenal.length; i++) {
 			var p = document.createElement("li");
-			p.innerText = val.pitchArsenal[i].stat.type.description + " - " + (Math.round(val.pitchArsenal[i].stat.averageSpeed*10)/10) + " MPH ("+(Math.round(val.pitchArsenal[i].stat.percentage * 100)) + "%)";
+			console.log(met);
+			var rpm = met.stats[0].splits.filter(e => e.stat.event && e.stat.event.details.type.code == val.pitchArsenal[i].stat.type.code)[0];
+			p.innerText = val.pitchArsenal[i].stat.type.description + " - " + (Math.round(val.pitchArsenal[i].stat.averageSpeed*10)/10) + " MPH/"+ rpm.stat.metric.averageValue+ " RPM ("+(Math.round(val.pitchArsenal[i].stat.percentage * 1000)/10) + "%)";
 			pitches.appendChild(p);
 		}
 		} else {
@@ -240,6 +249,9 @@ function pitchDisplay(game,ha) {
 			statsAgainst.innerHTML+=" BABIP<br>" + Math.round(val.sabermetrics.wRcPlus) + " wRC+&emsp;";
 		}
 		statsAgainst.innerHTML+= (Math.round(val.sabermetrics.war*100)/100)+ " WAR";
+		if (!isPitch) {
+			statsAgainst.innerHTML+="<br>"+met.stats[0].splits[1].stat.metric.averageValue + "&deg; AVG Launch Angle&emsp;"+met.stats[0].splits[0].stat.metric.averageValue+ " MPH AVG Exit Velo";
+		}
 		var handH = document.getElementById(ha+"VsHand");//createElement("h3");
 		handH.innerText = game.liveData.plays.currentPlay.matchup.splits[split].replaceAll("_"," ");
 		var hand = document.getElementById(ha+"HandStats");//createElement("p");
@@ -324,7 +336,7 @@ function pitchDisplay(game,ha) {
 		//div.append(top,img,summ,pitches,head,statsAgainst,handH,hand,duh,due,bph,bPen);
 		//document.getElementById(ha).innerHTML = "";
 		//document.getElementById(ha).appendChild(div);
-	});
+		});});
 	getData(baseURL + "/api/v1/game/"+game.gamePk+"/contextMetrics").then((valCM) => {
 		console.log(valCM);
 		for (var i = 0; i < 2; i++) {
