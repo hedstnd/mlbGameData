@@ -57,7 +57,7 @@ window.onload = function() {
 		// document.getElementById("scores").innerHTML = "";
 		document.getElementById("scores").appendChild(tab);
 		if (g.length == 0) {
-			document.getElementById("scores").innerHTML = "<table><td>No active games</td></table>";
+			document.getElementById("scores").innerHTML += "<table><td>No active games</td></table>";
 		}
 });
 }
@@ -75,6 +75,7 @@ function gameDay() {
 	
 }
 function runGD(url, desc="") {
+	document.getElementById("sett").className +=" gameOn";
 	uRL = url;
 	gameDay();
 	if (desc.length > 0) {
@@ -94,6 +95,7 @@ function pitchDisplay(game,ha) {
 	var risp2;
 	var r3l2;
 	var popUp = document.getElementById("popText");
+	setTimeout(() => {}, document.getElementById("offset").value * 1000);
 	if (game.gameData.status.statusCode != "I" && game.gameData.status.statusCode != "PW" && game.gameData.status.statusCode != hideCode) {
 		popUp.parentElement.style.display = "block";
 		popUp.innerText = game.gameData.status.detailedState;
@@ -483,4 +485,13 @@ function splitInHalf(string) {
 	spl.push(string.substring(0,Math.round(string.length/2)));
 	spl.push(string.substring(Math.round(string.length/2)));
 	return spl;
+}
+function delayTime() {
+	document.getElementById("delaySec").innerText = document.getElementById("offset").value + "s";
+}
+function showSett() {
+	document.getElementById("sett").style.display = "block";
+}
+function closeSett() {
+	document.getElementById("sett").style.display = "none";
 }

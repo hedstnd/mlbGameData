@@ -3,6 +3,22 @@
 	--first: url('');
 	--third: url('');
 }
+#offLabel {
+	position: fixed;
+	right: 10px;
+	bottom: 10px;
+}
+.gameOn #offLabel {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+}
+.gameOn #sett {
+	background-color: rgba(0,0,0,0.5);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+}
 #scores::before {
 	background-image: url('https://img.mlbstatic.com/mlb-images/image/upload/t_2x1/t_w1536/mlb/owgfkohnpj1yxwhwpy0w.jpg');
 	filter: blur(20px);
@@ -678,7 +694,7 @@ p {
 /* #scores table, #scores tr:last-child td:nth-child(3) { */
 	/* border-bottom-right-radius: 10px; */
 /* } */
-#popUp {
+#popUp, .gameOn#sett {
 	position: fixed;
 	background-color: rgba(0,0,0,0.7);
 	left: 50dvw;
@@ -700,12 +716,26 @@ p {
 	left: 50%;
 	transform: translate(-50%,-50%);
 }
-#close::after {
+.close::after {
 	content: '\d7';
 }
-#close {
+.close, .gameOn #closeSett {
 	display: block;
 	float: right;
 	font-size: 1.5rem;
 	margin-right: 2%;
+}
+#closeSett {
+	display: none;
+}
+.showSett::before {
+	content: '\2699';
+	font-size: 3rem;
+	position: absolute;
+	right: 0;
+}
+.showSett {
+	position: absolute;
+	right: 0;
+	bottom: 4rem;
 }
