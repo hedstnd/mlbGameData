@@ -145,6 +145,9 @@ function pitchDisplay(game,ha) {
 	day = dayOfWeek[new Date(game.gameData.datetime.dateTime).getDay()].toLowerCase();
 	var tmCode = game.gameData.teams[ha].fileCode;
 	document.getElementById(ha).className = tmCode + " " + ha + " " + dayNight + " " + day;
+	if (game.gameType == "S") {
+		document.getElementById(ha).className += " spring";
+	}
 	document.getElementById(ha + "WPSpan").className = tmCode + " " + ha + " " + dayNight + " " + day;
 	// vars = game;
 	var isPitch = game.liveData.linescore.isTopInning == (ha == "home");
@@ -224,13 +227,14 @@ function pitchDisplay(game,ha) {
 		var pitches = document.getElementById(ha+"Pitches");//createElement("ul");
 		if (isPitch) {
 			pitches.innerHTML = "";
+			if (val.pitchArsenal) {
 			for (var i = 0; i < val.pitchArsenal.length; i++) {
-			var p = document.createElement("li");
-			console.log(met);
-			var rpm = met.stats[0].splits.filter(e => e.stat.event && e.stat.event.details.type.code == val.pitchArsenal[i].stat.type.code)[0];
-			p.innerText = val.pitchArsenal[i].stat.type.description + " - " + (Math.round(val.pitchArsenal[i].stat.averageSpeed*10)/10) + " MPH/"+ rpm.stat.metric.averageValue+ " RPM ("+(Math.round(val.pitchArsenal[i].stat.percentage * 1000)/10) + "%)";
-			pitches.appendChild(p);
-		}
+				var p = document.createElement("li");
+				console.log(met);
+				var rpm = met.stats[0].splits.filter(e => e.stat.event && e.stat.event.details.type.code == val.pitchArsenal[i].stat.type.code)[0];
+				p.innerText = val.pitchArsenal[i].stat.type.description + " - " + (Math.round(val.pitchArsenal[i].stat.averageSpeed*10)/10) + " MPH/"+ rpm.stat.metric.averageValue+ " RPM ("+(Math.round(val.pitchArsenal[i].stat.percentage * 1000)/10) + "%)";
+				pitches.appendChild(p);
+			}}
 		} else {
 			pitches.innerHTML = "";
 		}
@@ -238,6 +242,7 @@ function pitchDisplay(game,ha) {
 		//var head = document.createElement("h3");
 		// head.innerText = "Advanced Stats";
 		statsAgainst = document.getElementById(ha+"Adv");//createElement("p");
+		if (val.seasonAdvanced) {
 		statsAgainst.innerHTML = val.seasonAdvanced.pitchesPerPlateAppearance;
 		if (isPitch) {
 			statsAgainst.innerHTML += " Pitches/BF&emsp;" + val.seasonAdvanced.strikeoutsPer9 + " K/9&emsp;";
@@ -254,9 +259,13 @@ function pitchDisplay(game,ha) {
 		if (!isPitch) {
 			statsAgainst.innerHTML+="<br>"+met.stats[0].splits[1].stat.metric.averageValue + "&deg; AVG Launch Angle&emsp;"+met.stats[0].splits[0].stat.metric.averageValue+ " MPH AVG Exit Velo";
 		}
+		} else {
+			statsAgainst.innerHTML= "No data available";
+		}
 		var handH = document.getElementById(ha+"VsHand");//createElement("h3");
 		handH.innerText = game.liveData.plays.currentPlay.matchup.splits[split].replaceAll("_"," ");
 		var hand = document.getElementById(ha+"HandStats");//createElement("p");
+		if (val.statSplits.vl || val.statSplits.vr) {
 		if (isPitch) {
 			hand.innerHTML = val.statSplits[getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)].ops + " OPS&emsp;"+val.statSplits[getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)].avg + " BAA&emsp;" + val.statSplits[getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)].strikeoutWalkRatio+" K:BB";
 		} else {
@@ -282,6 +291,9 @@ function pitchDisplay(game,ha) {
 			} else if (r3l2) {
 				hand.innerHTML += "</p><h3>Runner on 3rd, &lt;2 out</h3><p>"+val.statSplits["r3l2"].avg + " AVG&emsp;"+val.statSplits["r3l2"].ops+ " OPS&emsp;"+val.statSplitsAdvanced.r3l2.extraBaseHits + " XBH&emsp;" + val.statSplitsAdvanced.r3l2.leftOnBase + " LOB&emsp;"+ val.statSplitsAdvanced.r3l2.plateAppearances + " PA";
 			}
+		}
+		} else {
+			hand.innerHTML= "No data available";
 		}
 		// var duh = document.createElement("h3");
 		// duh.innerText = "DUE UP";
