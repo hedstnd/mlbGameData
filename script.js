@@ -1,6 +1,7 @@
 var dayOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 var day;// = dayOfWeek[(new Date()).getDay()].toLowerCase();
 var timeOffset = (new Date()).getTimezoneOffset() / 60;
+var dateForYear = new Date();
 var twos = ["home","away"];
 const baseURL = "https://statsapi.mlb.com";
 var vars;
@@ -196,9 +197,23 @@ function pitchDisplay(game,ha) {
 	}
 	var search = baseURL;
 	if (isPitch) {
+		console.log(game);
+		if (game.gameData.game.type == "S") {
+			console.log("spring game");
+			search = baseURL + "/api/v1/people/"+ pitchID + "?hydrate=stats(season="+(dateForYear.getFullYear() - 1)+",group=pitching,type=[seasonAdvanced,pitchArsenal,sabermetrics,statSplits,statSplitsAdvanced],sitCodes="+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)+")"
+		} else {
+			if (game.gameData.game.type == "S") {
+				search = baseURL + "/api/v1/people/"+ pitchID + "?hydrate=stats(season="+(dateForYear.getFullYear() - 1)+",group=pitching,type=[seasonAdvanced,pitchArsenal,sabermetrics,statSplits,statSplitsAdvanced],sitCodes="+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)+")"
+			} else {
 		search = baseURL + "/api/v1/people/"+ pitchID + "?hydrate=stats(group=pitching,type=[seasonAdvanced,pitchArsenal,sabermetrics,statSplits,statSplitsAdvanced],sitCodes="+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)+")"
+			}
+		}
 	} else {
+		if (game.gameData.game.type == "S") {
+			search = baseURL + "/api/v1/people/"+pitchID+"?hydrate=stats(season="+(dateForYear.getFullYear() - 1)+",group=hitting,type=[seasonAdvanced,statSplits,sabermetrics,statSplitsAdvanced],sitCodes=["+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.batter)+",c"+game.liveData.plays.currentPlay.count.balls + game.liveData.plays.currentPlay.count.strikes;
+		} else {
 		search = baseURL + "/api/v1/people/"+pitchID+"?hydrate=stats(group=hitting,type=[seasonAdvanced,statSplits,sabermetrics,statSplitsAdvanced],sitCodes=["+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.batter)+",c"+game.liveData.plays.currentPlay.count.balls + game.liveData.plays.currentPlay.count.strikes;
+		}
 		if (r1 && r2 && r3) {
 			search+=",r123";
 			loaded = true;
@@ -215,10 +230,19 @@ function pitchDisplay(game,ha) {
 	getData(search).then((value) => {
 		var srch;
 		if (!isPitch) {
+			if (game.gameData.game.type == "S") {
+				srch = baseURL + "/api/v1/stats?season="+(dateForYear.getFullYear() - 1)+"&group=hitting&sportIds=1&stats=metricAverages&personId="+pitchID+"&metrics=launchSpeed,launchAngle,distance";
+			} else {
 			srch = baseURL + "/api/v1/stats?group=hitting&sportIds=1&stats=metricAverages&personId="+pitchID+"&metrics=launchSpeed,launchAngle,distance";
+			}
 		} else {
+			if (game.gameData.game.type == "S") {
+				srch = baseURL + "/api/v1/stats?season="+(dateForYear.getFullYear() - 1)+"&group=pitching&sportIds=1&stats=metricAverages&metrics=releaseSpinRate&personId="+pitchID;
+			} else {
 			srch = baseURL + "/api/v1/stats?group=pitching&sportIds=1&stats=metricAverages&metrics=releaseSpinRate&personId="+pitchID;
+			}
 		}
+		console.log(srch);
 		getData(srch).then((met) => {
 		console.log(value);
 		var val = makeSplitsWork(value.people[0].stats);
