@@ -296,8 +296,10 @@ p {
 	color: #e81828;
 }
 .phi.away {
-	background-color: #e81828;
-	color: #FFF;
+	/* background-color: #e81828; */
+	/* color: #FFF; no more red jerseys in 2024*/
+	color: #e81828;
+	background-color: silver;
 }
 .stl.home {
 	color: #c41e3a;
@@ -371,7 +373,11 @@ p {
 	text-shadow: 1px 0 0 #14225a, 0 1px 0 #14225a, 0 -1px 0 #14225a, -1px 0 0 #14225a;
 }
 .was.away {
-	background-color: #14225a;
+	/* background-color: #14225a; new uniforms in 2024*/
+	-webkit-text-stroke: 0.5px white;
+	text-stroke: 0.5px white;
+	text-shadow: 1px 0 0 #ab0003, 0 1px 0 #ab0003, 0 -1px 0 #ab0003, -1px 0 0 #ab0003;
+	color: #14225a;
 }
 .was.home.friday, .was.home.saturday {
 	background-color: dimgray;
@@ -415,6 +421,21 @@ p {
 	color: #df4601;
 	background-color: #000;
 }
+.bos.home.friday {
+	color: #0c2340;
+	text-shadow: 1px 0px 0px white, 0px 1px 0px white,-1px 0px 0px white,0px -1px 0px white;
+}
+.bos.away.friday {
+	text-shadow: 1px 0px 0px white, 0px 1px 0px white,-1px 0px 0px white,0px -1px 0px white;
+}
+.bos.home.saturday {
+	color: #307fe2 !important;
+	background-color: #ffd100 !important;
+}
+.bos.home.saturday #homeWPImg {
+	content: url('logos/bos-sat.png') !important;
+	border-radius: 50%;
+}
 .bos.home {
 	background-color: #bd3039;
 	color: #fff;
@@ -423,6 +444,7 @@ p {
 	background-color: #0c2340;
 	color: #bd3039;
 }
+
 .cws.away {
 	background-color: #000;
 	color: #fff;
@@ -593,7 +615,7 @@ p {
 	color: #0c2340 !important;
 }
 .nyy.away {
-	text-shadow: 1px 0 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+	/* text-shadow: 1px 0 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff; piping removed in 2024*/
 	background-color: gray;
 }
 .nym.home {

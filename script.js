@@ -7,6 +7,8 @@ const baseURL = "https://statsapi.mlb.com";
 var vars;
 var uRL;
 var hideCode = "";
+var curPitch;
+var curBat;
 var r = document.querySelector(':root');
 window.onload = function() {
 	getData(baseURL + "/api/v1/schedule?sportId=1&hydrate=linescore").then((value) => {
@@ -153,6 +155,8 @@ function pitchDisplay(game,ha) {
 	// vars = game;
 	var isPitch = game.liveData.linescore.isTopInning == (ha == "home");
 	console.log(ha);
+	curBat = game.liveData.plays.currentPlay.matchup.batter.id;
+	curPitch = game.liveData.plays.currentPlay.matchup.pitcher.id;
 	var split;
 	if (isPitch) {
 		split = "pitcher";
