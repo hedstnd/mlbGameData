@@ -374,9 +374,9 @@ p {
 }
 .was.away {
 	/* background-color: #14225a; new uniforms in 2024*/
-	-webkit-text-stroke: 0.5px white;
-	text-stroke: 0.5px white;
-	text-shadow: 1px 0 0 #ab0003, 0 1px 0 #ab0003, 0 -1px 0 #ab0003, -1px 0 0 #ab0003;
+	/* -webkit-text-stroke: 0.5px white; */
+	/* text-stroke: 0.5px white; */
+	text-shadow: 1px 0 0 white, 0 1px 0 white, 0 -1px 0 white, -1px 0 0 white,2px 0 0 #ab0003, 0 2px 0 #ab0003, 0 -2px 0 #ab0003, -2px 0 0 #ab0003;
 	color: #14225a;
 }
 .was.home.friday, .was.home.saturday {
