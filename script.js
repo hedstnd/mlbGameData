@@ -278,12 +278,15 @@ function pitchDisplay(game,ha) {
 			statsAgainst.innerHTML+= " Pitches/PA&emsp;"
 		}
 		statsAgainst.innerHTML += val.seasonAdvanced.babip;
-		if (isPitch) {
-			statsAgainst.innerHTML+=" BAABIP<br>"+Math.round(val.sabermetrics.eraMinus)+" ERA&ndash;&emsp;";
-		} else {
-			statsAgainst.innerHTML+=" BABIP<br>" + Math.round(val.sabermetrics.wRcPlus) + " wRC+&emsp;";
+		if (!val.sabermetrics) {
+			val.sabermetrics = new Object();
 		}
-		statsAgainst.innerHTML+= (Math.round(val.sabermetrics.war*100)/100)+ " WAR";
+		if (isPitch) {
+			statsAgainst.innerHTML+=" BAABIP<br>"+Math.round(val.sabermetrics.eraMinus || 0)+" ERA&ndash;&emsp;";
+		} else {
+			statsAgainst.innerHTML+=" BABIP<br>" + Math.round(val.sabermetrics.wRcPlus || 0) + " wRC+&emsp;";
+		}
+		statsAgainst.innerHTML+= (Math.round((val.sabermetrics.war || 0)*100)/100)+ " WAR";
 		if (!isPitch) {
 			statsAgainst.innerHTML+="<br>"+met.stats[0].splits[1].stat.metric.averageValue + "&deg; AVG Launch Angle&emsp;"+met.stats[0].splits[0].stat.metric.averageValue+ " MPH AVG Exit Velo";
 		}

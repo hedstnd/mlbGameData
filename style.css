@@ -539,17 +539,17 @@ p {
 	background-color: #6bace4 !important;
 	color: #fff !important;
 }
-.laa.home {
+.ana.home { /*.laa.home {*/
 	color: #ba0021;
 }
-.laa.away {
+.ana.away {/*.laa.away {*/
 	background-color: #ba0021;
 	color: #fff;
 }
-.lad.home {
+.la.home {
 	color: #005a9c;
 }
-.lad.away {
+.la.away {
 	background-color: #005a9c;
 }
 .mia {
