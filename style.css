@@ -268,11 +268,19 @@ p {
 	background-color: gray;
 	color: white;
 }
-.phi.home.day {
-	background-color: #fffdd0;
-	/* text-stroke: 0.5px #284898;	 */
-	/* -webkit-text-stroke: 0.5px #284898; */
-	text-shadow: 0.5px 0 0 #284898, 0 0.5px 0 #284898, -0.5px 0 0 #284898, 0 -0.5px 0 #284898;
+.phi.home.day #homeWPImg {
+	content: url('logos/phi-day.png');
+	background-color: #284898 !important;
+	border-radius: 50% !important;
+	height: 3dvh !important;
+	width: auto;
+}
+.phi.home.friday #homeWPImg, .phi.home.day.friday #homeWPImg {
+	content: url('logos/phi-fri.png');
+	background-color: #00163b !important;
+	border-radius: 50% !important;
+	height: 3dvh !important;
+	width: auto;
 }
 .phi.home.day #homeWPImg {
 	content: url('logos/phi-day.png');
@@ -290,6 +298,14 @@ p {
 	background-color: #6f263d !important;
 	border-radius: 50% !important;
 	width: 3dvh !important;
+}
+.phi.home.friday#homeWPSpan {
+	/* background-color: #0397d6 !important; */
+	background: #0397d6 !important;
+}
+.phi.home.friday {
+	background: linear-gradient(#0397d6 30%, #00163b 70%) !important;
+	color: #ffde00 !important;
 }
 .phi.home {
 	background-color: #fff;

@@ -282,7 +282,7 @@ function pitchDisplay(game,ha) {
 			val.sabermetrics = new Object();
 		}
 		if (isPitch) {
-			statsAgainst.innerHTML+=" BAABIP<br>"+Math.round(val.sabermetrics.eraMinus || 0)+" ERA&ndash;&emsp;";
+			statsAgainst.innerHTML+=" BAABIP<br>"+Math.round(val.sabermetrics.eraMinus || 0)+" ERA&ndash;&emsp;"+Math.round(val.sabermetrics.fipMinus || 0) + " FIP&ndash;&emsp;";
 		} else {
 			statsAgainst.innerHTML+=" BABIP<br>" + Math.round(val.sabermetrics.wRcPlus || 0) + " wRC+&emsp;";
 		}
