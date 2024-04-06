@@ -400,7 +400,7 @@ p {
 	color: #fffdd0;
 	text-shadow: 1px 0 0 #14225a, 0 1px 0 #14225a, 0 -1px 0 #14225a, -1px 0 0 #14225a, -1.5px 1.5px 0 #ffb7ae;
 }
-.was.home.friday, .was.home.saturday #homeWPImg {
+.was.home.friday #homeWPImg, .was.home.saturday #homeWPImg {
 	content: url('logos/was-fri-sat.png');
 	background-color: gray;
 	border-radius: 50%;
