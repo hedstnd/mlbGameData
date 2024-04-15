@@ -305,7 +305,17 @@ p {
 }
 .phi.home.friday {
 	background: linear-gradient(#0397d6 30%, #00163b 70%) !important;
-	color: #ffde00 !important;
+	/* color: #ffde00 !important; */
+}
+.phi.home.friday #innNum, .phi.home.friday #homeWP, .phi.home.friday #homeDesc, .phi.home.friday #homeScore, .phi.home.friday #homeName, .phi.home.friday h3, .phi.home.friday li, .phi.home.friday p {
+	color: transparent !important;
+	background-clip: text;
+	-webkit-background-clip: text;
+	background-image: url('logos/phi-fri-text.png');
+	background-size: contain;
+}
+.phi.home.friday #homeNm, .phi.home.friday .showSett {
+	color: rgb(255,202,36) !important;
 }
 .phi.home {
 	background-color: #fff;
