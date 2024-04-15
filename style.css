@@ -579,23 +579,39 @@ p {
 	background-color: #005a9c;
 }
 .mia {
-	text-stroke: 0.5px #00a3e0;
-	-webkit-text-stroke: 0.5px #00a3e0;
+	text-stroke: 0.375px #00a3e0;
+	-webkit-text-stroke: 0.375px #00a3e0;
 	color: #000;
+	text-shadow: -1px 0 0 #ef3340, 0 1px 0 #ef3340;
 }
-.mia.home.friday {
-	background-color: #ef3340;
-	color: #fff;
+.mia.home.night.friday, .mia.away.friday, .mia.away.saturday {
+	background-color: #000;
 }
-.mia.home.friday #homeWPImg {
-	content: url('logos/mia-fri.png');
-	border-radius: 50%;
+.mia.home.sunday, .mia.home.day {
+	color: #000 !important;
+	text-stroke: none /*0.5px #fff*/ !important;
+	-webkit-text-stroke: none /*0.5px #fff*/ !important;
+	background-color: #00a3e0;
 }
 .mia.home.saturday {
-	color: #009ca6;
-	text-stroke: 0.5px black;
-	-webkit-text-stroke: 0.5px black;
+	background-color: #ef3340 !important;
+	color: #fff !important;
+	text-shadow: 0 1px #00a3e0, 1px 0 #00a3e0 !important;
+	-webkit-text-stroke: none !important;
 }
+.mia.home.sunday #homeWPImg, .mia.home.day #homeWPImg, .mia.home.night.friday #homeWPImg, .mia.away.friday #awayWPImg, .mia.away.saturday #awayWPImg {
+	content: url('logos/mia-alt.png');
+	border-radius: 50%;
+}
+/* .mia.home.friday #homeWPImg { */
+	/* content: url('logos/mia-fri.png'); */
+	/* border-radius: 50%; */
+/* } */
+/* .mia.home.saturday { */
+	/* color: #009ca6; */
+	/* text-stroke: 0.5px black; */
+	/* -webkit-text-stroke: 0.5px black; */
+/* } */
 .mia.home.saturday #homeWPImg {
 	content: url('logos/mia-sat.jpg');
 	border-radius: 50%;
