@@ -268,12 +268,9 @@ p {
 	background-color: gray;
 	color: white;
 }
-.phi.home.day #homeWPImg {
-	content: url('logos/phi-day.png');
-	background-color: #284898 !important;
-	border-radius: 50% !important;
-	height: 3dvh !important;
-	width: auto;
+.phi.home.day {
+	background-color: #fffdd0 !important;
+	text-shadow: 0.5px 0 0 #284898, 0 0.5px 0 #284898, -0.5px 0 0 #284898, 0 -0.5px 0 #284898;
 }
 .phi.home.friday #homeWPImg, .phi.home.day.friday #homeWPImg {
 	content: url('logos/phi-fri.png');
@@ -659,6 +656,18 @@ p {
 .nyy.away {
 	/* text-shadow: 1px 0 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff; piping removed in 2024*/
 	background-color: gray;
+}
+.nym.home.saturday {
+	background-color: #333 !important;
+	color: #000 !important;
+}
+#homeWPSpan.nym.home.saturday {
+	background-image: url('logos/nym-sat-bg.png') !important;
+	background-size: contain !important;
+	background-repeat: repeat;
+}
+.nym.home.saturday #homeWPImg {
+	content: url('logos/nym-sat.png');
 }
 .nym.home {
 	background-color: #002d72;
