@@ -11,7 +11,7 @@ var curPitch;
 var curBat;
 var r = document.querySelector(':root');
 window.onload = function() {
-	getData(baseURL + "/api/v1/schedule?sportId=1,51,22,11,12,13,14,15,16,5442&hydrate=linescore").then((value) => {
+	getData(baseURL + "/api/v1/schedule?sportId=1,51,22,11,12,13,14,15,16,5442&hydrate=linescore,broadcasts").then((value) => {
 		console.log(value);
 		if (value.dates.length > 0) {
 			g = value.dates[0].games.filter(e => e.status.statusCode != "S" && e.status.codedGameState != "F");
@@ -27,6 +27,8 @@ window.onload = function() {
 		for (var i = 0; i < g.length/3; i++) {
 			row = document.createElement("tr");
 			for (var j = i * 3; j < i*3+3 && j < g.length; j++) {
+				var bcast = g[j].broadcasts.filter(e => e.type=="TV");
+				console.log(bcast);
 				if (g[j].teams.away.score!=null && g[j].teams.home.score!=null) {
 					game = document.createElement("td");
 					if (g[j].status.statusCode == "P") {
@@ -36,6 +38,20 @@ window.onload = function() {
 						if (g[j].status.statusCode != g[j].status.codedGameState) {
 							game.innerHTML+= " ("+g[j].status.detailedState+")";
 						}
+					}
+					game.innerHTML+= "<br/>TV: ";
+					for (var k = 0; k < bcast.length; k++) {
+						if (k < bcast.length - 1 && bcast[k].id == bcast[k+1].id) {
+							console.log(k);
+							continue;
+						}
+						game.innerHTML+= bcast[k].callSign;
+						if (k < bcast.length - 1) {
+							game.innerHTML+= ",";
+						}
+					}
+					if (bcast.length == 0) {
+						game.innerHTML += "none";
 					}
 					if (g[j].gameType != "R" && g[j].gameType != "S") {
 						game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\",\""+ g[j].description +"\")");
@@ -236,7 +252,7 @@ async function pitchDisplay(game,ha) {
 		search+= "])";
 	}
 	if (game.gameData.teams.away.sport.id != 1 || game.gameData.teams.home.sport.id != 1) {
-		search = search.replaceAll("stats(","stats(leagueListId=mlb_milb,");
+		search = search.replaceAll("stats(","stats(leagueListId=milb_all,");
 	}
 	// var wP;
 	getData(search).then((value) => {
