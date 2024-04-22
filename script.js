@@ -11,10 +11,15 @@ var curPitch;
 var curBat;
 var r = document.querySelector(':root');
 window.onload = function() {
-	getData(baseURL + "/api/v1/schedule?sportId=1&hydrate=linescore").then((value) => {
+	getData(baseURL + "/api/v1/schedule?sportId=1,51,22,11,12,13,14,15,16,5442&hydrate=linescore").then((value) => {
 		console.log(value);
 		if (value.dates.length > 0) {
 			g = value.dates[0].games.filter(e => e.status.statusCode != "S" && e.status.codedGameState != "F");
+			if (value.dates[0].games.length > 15) {
+				g = g.sort((a,b) => {
+					return a.gamesInSeries - b.gamesInSeries;
+				});
+			}
 		} else {
 			g = [];
 		}
@@ -90,7 +95,7 @@ function runGD(url, desc="") {
 	}
 	run = setInterval(gameDay,10000);
 }
-function pitchDisplay(game,ha) {
+async function pitchDisplay(game,ha) {
 	var r1;
 	var r2;
 	var r3;
@@ -98,7 +103,7 @@ function pitchDisplay(game,ha) {
 	var risp2;
 	var r3l2;
 	var popUp = document.getElementById("popText");
-	setTimeout(() => {}, document.getElementById("offset").value * 1000);
+	await timeout(document.getElementById("offset").value * 1000);
 	if (game.gameData.status.statusCode != "I" && game.gameData.status.statusCode != "PW" && game.gameData.status.statusCode != hideCode) {
 		popUp.parentElement.style.display = "block";
 		popUp.innerText = game.gameData.status.detailedState;
@@ -230,6 +235,9 @@ function pitchDisplay(game,ha) {
 		}
 		search+= "])";
 	}
+	if (game.gameData.teams.away.sport.id != 1 || game.gameData.teams.home.sport.id != 1) {
+		search = search.replaceAll("stats(","stats(leagueListId=mlb_milb,");
+	}
 	// var wP;
 	getData(search).then((value) => {
 		var srch;
@@ -259,7 +267,12 @@ function pitchDisplay(game,ha) {
 			for (var i = 0; i < val.pitchArsenal.length; i++) {
 				var p = document.createElement("li");
 				console.log(met);
-				var rpm = met.stats[0].splits.filter(e => e.stat.event && e.stat.event.details.type.code == val.pitchArsenal[i].stat.type.code)[0];
+				var rpm = met.stats[0].splits.filter(e => e.stat.event && e.stat.event.details.type.code == val.pitchArsenal[i].stat.type.code)[0] || new Object();
+				if (!rpm.stat) {
+					rpm.stat = new Object();
+					rpm.stat.metric = new Object();
+					rpm.stat.metric.averageValue = "---";
+				}
 				p.innerText = val.pitchArsenal[i].stat.type.description + " - " + (Math.round(val.pitchArsenal[i].stat.averageSpeed*10)/10) + " MPH/"+ rpm.stat.metric.averageValue+ " RPM ("+(Math.round(val.pitchArsenal[i].stat.percentage * 1000)/10) + "%)";
 				pitches.appendChild(p);
 			}}
@@ -288,7 +301,7 @@ function pitchDisplay(game,ha) {
 		}
 		statsAgainst.innerHTML+= (Math.round((val.sabermetrics.war || 0)*100)/100)+ " WAR";
 		if (!isPitch) {
-			statsAgainst.innerHTML+="<br>"+met.stats[0].splits[1].stat.metric.averageValue + "&deg; AVG Launch Angle&emsp;"+met.stats[0].splits[0].stat.metric.averageValue+ " MPH AVG Exit Velo";
+			statsAgainst.innerHTML+="<br>"+(met.stats[0].splits[1].stat.metric.averageValue || "--") + "&deg; AVG Launch Angle&emsp;"+(met.stats[0].splits[0].stat.metric.averageValue || "--")+ " MPH AVG Exit Velo";
 		}
 		} else {
 			statsAgainst.innerHTML= "No data available";
@@ -537,4 +550,7 @@ function showSett() {
 }
 function closeSett() {
 	document.getElementById("sett").style.display = "none";
+}
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
