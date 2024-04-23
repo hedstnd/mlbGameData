@@ -476,7 +476,7 @@ function getGameTime(dt) {
 	} else {
 		gTime[2] = " PM";
 	}
-	return (gTime[0] % 12) + ":" + gTime[1] + gTime[2];
+	return ((gTime[0] % 12) || 12) + ":" + gTime[1] + gTime[2];
 }
 async function getData(url) {
 	var ret;
