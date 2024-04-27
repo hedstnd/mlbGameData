@@ -27,7 +27,12 @@ window.onload = function() {
 		for (var i = 0; i < g.length/3; i++) {
 			row = document.createElement("tr");
 			for (var j = i * 3; j < i*3+3 && j < g.length; j++) {
-				var bcast = g[j].broadcasts.filter(e => e.type=="TV");
+				var bcast;
+				if (g[j].broadcasts) {
+					bcast = g[j].broadcasts.filter(e => e.type=="TV");
+				} else {
+					bcast = [];
+				}
 				console.log(bcast);
 				if (g[j].teams.away.score!=null && g[j].teams.home.score!=null) {
 					game = document.createElement("td");
