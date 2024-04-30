@@ -366,6 +366,19 @@ p {
 	/* -webkit-text-stroke: 0.5px #8fbce6; */
 	text-shadow: 1px 0 0 #8fbce6, 0 1px 0 #8fbce6, -1px 0 0 #8fbce6, 0 -1px 0 #8fbce6;
 }
+.tb.home.saturday {
+	color: #65bc47 !important;
+	background: url('logos/tb-sat-bg.png') !important;
+	background-size: contain;
+	background-repeat: repeat;
+}
+.tb.home.saturday #homeWPImg {
+	content: url('logos/tb-sat.png');
+}
+.tb.home.saturday#homeWPSpan {
+	background: url('logos/tb-sat-upper.png') !important;
+	background-size: cover !important;
+}
 .tex.home {
 	color: #003278;
 }
