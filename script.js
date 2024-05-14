@@ -17,7 +17,7 @@ window.onload = function() {
 			g = value.dates[0].games.filter(e => e.status.statusCode != "S" && e.status.codedGameState != "F");
 			if (value.dates[0].games.length > 15) {
 				g = g.sort((a,b) => {
-					return a.gamesInSeries - b.gamesInSeries;
+					return a.teams.home.team.id - b.teams.home.team.id;
 				});
 			}
 		} else {

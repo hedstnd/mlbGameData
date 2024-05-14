@@ -524,6 +524,17 @@ p {
 	-webkit-text-stroke: 0.5px #c6011f;
 	text-stroke: 0.5px #c6011f;
 }
+#homeWPSpan.cle.home.friday {
+	background: url('logos/cle-fri-wpbg.png') !important;
+	background-size: contain !important;
+	background-repeat: repeat-x !important;
+}
+.cle.home.friday {
+	background: url('logos/cle-fri-bg.png') !important;
+	color: #fff !important;
+	background-size: cover !important;
+	background-repeat: no-repeat !important;
+}
 .cle.home {
 	background-color: #e50022;
 	color: #00385d;
@@ -546,6 +557,20 @@ p {
 }
 .col.home.wednesday #homeWPImg, .col.home.saturday #homeWPImg {
 	content: url('https://media-s3-us-east-1.ceros.com/mlb/images/2022/05/23/f54767fef8e727d2634db80e5c96a037/patch.png');
+}
+.det.home.friday.night {
+	background: url('logos/det-fri-bg.png') !important;
+	background-position: center !important;
+	background-size: auto auto;
+	background-repeat: no-repeat;
+	background-color: #141823;
+	color: #fff !important;
+}
+#homeWPSpan.det.home.friday.night {
+	background: #141823 !important;
+}
+.det.home.friday.night #homeWPImg {
+	content: url('logos/det-fri.png');
 }
 .det.home {
 	color: #0c2340;
