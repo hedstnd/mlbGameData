@@ -324,6 +324,13 @@ p {
 	color: #e81828;
 	background-color: silver;
 }
+.stl.home.friday {
+	background-color: #c41e3a !important;
+	color: #fff !important;
+}
+.stl.home.friday #homeWPImg {
+	content: url('logos/stl-cc.png');
+}
 .stl.home {
 	color: #c41e3a;
 	background-color: #fff;
@@ -396,6 +403,13 @@ p {
 	padding: .25dvh;
 	border-radius: 50%;
 	background-color: black;
+}
+.tor.home.wednesday, .tor.home.friday {
+	background-color: #141823 !important;
+	color: #364a9e !important;
+}
+.tor.home.wednesday #homeWPImg, .tor.home.friday #homeWPImg {
+	content: url('logos/tor-wed-fri.png');
 }
 .tor.home {
 	color: #134a8e;
@@ -701,7 +715,7 @@ p {
 }
 #homeWPSpan.nym.home.saturday {
 	background-image: url('logos/nym-sat-bg.png') !important;
-	background-size: contain !important;
+	background-size: auto 100% !important;
 	background-repeat: repeat;
 }
 .nym.home.saturday #homeWPImg {
