@@ -692,6 +692,13 @@ p {
 .mil.home.friday p h3 {
 	filter: unset;
 }
+.min.home.friday {
+	background-color: #054c79 !important;
+	color: white !important;
+}
+.min.home.friday #homeWPImg {
+	content: url('logos/min-fri.png');
+}
 .min.home {
 	color: #d31145;
 }
