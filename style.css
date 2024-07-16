@@ -371,7 +371,7 @@ p {
 	background-color: #092c5c;
 	/* text-stroke: 0.5px #8fbce6; */
 	/* -webkit-text-stroke: 0.5px #8fbce6; */
-	text-shadow: 1px 0 0 #8fbce6, 0 1px 0 #8fbce6, -1px 0 0 #8fbce6, 0 -1px 0 #8fbce6;
+	/* text-shadow: 1px 0 0 #8fbce6, 0 1px 0 #8fbce6, -1px 0 0 #8fbce6, 0 -1px 0 #8fbce6; */
 }
 .tb.home.saturday {
 	color: #65bc47 !important;
@@ -420,13 +420,13 @@ p {
 .was.home {
 	color: #ab0003;
 	/* -webkit-text-stroke: 0.5px #14225a; */
-	text-shadow: 1px 0 0 #14225a, 0 1px 0 #14225a, 0 -1px 0 #14225a, -1px 0 0 #14225a;
+	text-shadow: 0.01em 0 0 #14225a, 0 0.01em 0 #14225a, 0 -0.01em 0 #14225a, -0.01em 0 0 #14225a;
 }
 .was.away {
 	/* background-color: #14225a; new uniforms in 2024*/
 	/* -webkit-text-stroke: 0.5px white; */
 	/* text-stroke: 0.5px white; */
-	text-shadow: 1px 0 0 white, 0 1px 0 white, 0 -1px 0 white, -1px 0 0 white,2px 0 0 #ab0003, 0 2px 0 #ab0003, 0 -2px 0 #ab0003, -2px 0 0 #ab0003;
+	/* text-shadow: 1px 0 0 white, 0 1px 0 white, 0 -1px 0 white, -1px 0 0 white,2px 0 0 #ab0003, 0 2px 0 #ab0003, 0 -2px 0 #ab0003, -2px 0 0 #ab0003; */
 	color: #14225a;
 }
 .was.home.friday, .was.home.saturday {
@@ -440,12 +440,12 @@ p {
 	border-radius: 50%;
 }
 .ari.home {
-	-webkit-text-stroke: 0.5px #30ced8;
-	text-stroke: 0.5px #30ced8;
+	-webkit-text-stroke: 0.03em #30ced8;
+	text-stroke: 0.03em #30ced8;
 }
 .ari.away {
 	color: #000;
-	-webkit-text-stroke: 0.5px #a71930;
+	-webkit-text-stroke: 0.03em #a71930;
 	text-stroke: 0.5px #a71930;
 }
 .atl {
@@ -476,7 +476,7 @@ p {
 	text-shadow: 1px 0px 0px white, 0px 1px 0px white,-1px 0px 0px white,0px -1px 0px white;
 }
 .bos.away.friday {
-	text-shadow: 1px 0px 0px white, 0px 1px 0px white,-1px 0px 0px white,0px -1px 0px white;
+	/* text-shadow: 1px 0px 0px white, 0px 1px 0px white,-1px 0px 0px white,0px -1px 0px white; */
 }
 .bos.home.saturday {
 	color: #307fe2 !important;
@@ -535,8 +535,7 @@ p {
 }
 .cin.home.friday {
 	background-color: #000;
-	-webkit-text-stroke: 0.5px #c6011f;
-	text-stroke: 0.5px #c6011f;
+	/* -webkit-text-stroke: 0.5px #c6011f; */
 }
 #homeWPSpan.cle.home.friday {
 	background: url('logos/cle-fri-wpbg.png') !important;
@@ -591,9 +590,9 @@ p {
 }
 .det.away {
 	background-color: gray;
-	color: #oc2340;
-	-webkit-text-stroke: 0.5px #fa4616;
-	text-stroke: 0.5px #fa4616;
+	color: #0c2340;
+	-webkit-text-stroke: 0.03em #fa4616;
+	text-stroke: 0.03empx #fa4616;
 }
 .hou.home {
 	color: #002d62;
@@ -743,17 +742,17 @@ p {
 	color: #003831;
 	/* -webkit-text-stroke:1px #efb21e; */
 	/* text-stroke:1px #efb21e; */
-	text-shadow: 1px 0 0 #efb21e, 0 1px 0 #efb21e, -1px 0 0 #efb21e, 0 -1px 0 #efb21e;
+	text-shadow: 0.03em 0 0 #efb21e, 0 0.03em 0 #efb21e, -0.03em 0 0 #efb21e, 0 -0.03em 0 #efb21e;
 }
 .pit.home {
 	/* -webkit-text-stroke: 0.5px #fdb827; */
 	/* text-stroke: 0.5px #fdb827; */
-	text-shadow: 1px 0 0 #fdb827, 0 1px 0 #fdb827, -1px 0 0 #fdb827, 0 -1px 0 #fdb827;
+	text-shadow: 0.03em 0 0 #fdb827, 0 0.03em 0 #fdb827, -0.03em 0 0 #fdb827, 0 -0.03em 0 #fdb827;
 }
 .pit.away {
 	/* -webkit-text-stroke: 0.5px #fdb827; */
 	/* text-stroke: 0.5px #fdb827; */
-	text-shadow: 1px 0 0 #fdb827, 0 1px 0 #fdb827, -1px 0 0 #fdb827, 0 -1px 0 #fdb827;
+	text-shadow: 0.03em 0 0 #fdb827, 0 0.03em 0 #fdb827, -0.03em 0 0 #fdb827, 0 -0.03em 0 #fdb827;
 	color: black;
 }
 .pit.home.friday {

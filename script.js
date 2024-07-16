@@ -173,13 +173,29 @@ async function pitchDisplay(game,ha) {
 	var dayNight = game.gameData.datetime.dayNight;
 	day = dayOfWeek[new Date(game.gameData.datetime.dateTime).getDay()].toLowerCase();
 	var tmCode = game.gameData.teams[ha].fileCode;
-	document.getElementById(ha).className = tmCode + " " + ha + " " + dayNight + " " + day;
+	var isPitch = game.liveData.linescore.isTopInning == (ha == "home");
+	if (game.gameData.game.type != "A") {
+		document.getElementById(ha).className = tmCode + " " + ha + " " + dayNight + " " + day;
+	} else {
+		var playerTm;
+		if (isPitch) {
+			var grabber = await getData(baseURL + game.liveData.plays.currentPlay.matchup.pitcher.link+"?hydrate=currentTeam,team(team)").then((lin) => {
+				playerTm = lin.people[0].currentTeam.fileCode;
+				console.log(playerTm);
+			});
+		} else {
+			var grabber = await getData(baseURL + game.liveData.plays.currentPlay.matchup.batter.link+"?hydrate=currentTeam,team(team)").then((lin) => {
+				playerTm = lin.people[0].currentTeam.fileCode;
+			});
+		}
+		document.getElementById(ha).className = playerTm + " " + ha + " " + dayNight + " " + day;
+	}
 	if (game.gameType == "S") {
 		document.getElementById(ha).className += " spring";
 	}
 	document.getElementById(ha + "WPSpan").className = tmCode + " " + ha + " " + dayNight + " " + day;
 	// vars = game;
-	var isPitch = game.liveData.linescore.isTopInning == (ha == "home");
+	
 	console.log(ha);
 	curBat = game.liveData.plays.currentPlay.matchup.batter.id;
 	curPitch = game.liveData.plays.currentPlay.matchup.pitcher.id;
