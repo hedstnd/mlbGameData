@@ -188,7 +188,7 @@ async function pitchDisplay(game,ha) {
 				playerTm = lin.people[0].currentTeam.fileCode;
 			});
 		}
-		document.getElementById(ha).className = playerTm + " " + ha + " " + dayNight + " " + day;
+		document.getElementById(ha).className = playerTm + " " + ha + " " + dayNight;
 	}
 	if (game.gameType == "S") {
 		document.getElementById(ha).className += " spring";
