@@ -1,6 +1,8 @@
 var dayOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 var day;// = dayOfWeek[(new Date()).getDay()].toLowerCase();
 var timeOffset = (new Date()).getTimezoneOffset() / 60;
+let wakeLock = null;
+var wlSupp = false;
 var dateForYear = new Date();
 var twos = ["home","away"];
 const baseURL = "https://statsapi.mlb.com";
@@ -117,6 +119,22 @@ function runGD(url, desc="") {
 	run = setInterval(gameDay,10000);
 }
 async function pitchDisplay(game,ha) {
+	try {
+		if (!wlSupp && game.gameData.status.codedGameState != "F") {
+			wlSupp = true;
+			wakeLock = await navigator.wakeLock.request("screen");
+			wakeLock.addEventListener("release", () => {
+				// the wake lock has been released
+				console.log("Wake Lock has been released");
+				});
+			console.log("Wake Lock is active!");
+		} else if (wlSupp && game.gameData.status.codedGameState == "F") {
+			wakeLock.release();
+		}
+	} catch (err) {
+		// The Wake Lock request has failed - usually system related, such as battery.
+		console.log(err);
+	}
 	var r1;
 	var r2;
 	var r3;
