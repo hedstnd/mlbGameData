@@ -379,8 +379,8 @@ async function pitchDisplay(game,ha) {
 				}
 				hand.innerHTML+= val.statSplits["c"+game.liveData.plays.currentPlay.count.balls+game.liveData.plays.currentPlay.count.strikes].plateAppearances+ " PA";
 			}
-			if (game.liveData.linescore.currentInning>= 9 && !game.liveData.linescore.isTopInning && game.liveData.plays.currentPlay.runners.length > (game.liveData.linescore.teams.away.runs - game.liveData.linescore.teams.home.runs)) {
-				hand.innerHTML+= "<br>"+val.seasonAdvanced.walkOffs+ " walk-offs";
+			if (game.liveData.linescore.currentInning>= 9 && !game.liveData.linescore.isTopInning && game.liveData.plays.currentPlay.runners.length > (game.liveData.linescore.teams.away.runs - game.liveData.linescore.teams.home.runs)-1) {
+				statsAgainst.innerHTML+= "<br>"+val.seasonAdvanced.walkOffs+ " walk-offs";
 			}
 			if (loaded) {
 				//avg, ops, hr, rbi, pa
