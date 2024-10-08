@@ -293,7 +293,16 @@ async function pitchDisplay(game,ha) {
 	if (game.gameData.teams.away.sport.id != 1 || game.gameData.teams.home.sport.id != 1) {
 		search = search.replaceAll("stats(","stats(leagueListId=milb_all,");
 	}
+	var pRank;
+	var rankUrl = baseURL;
+	if (isPitch) {
+		rankUrl +="/api/v1/stats/leaders?leaderCategories=wins,strikeOuts,saves&statType=career&leaderGameTypes=P&limit=50&statGroup=pitching";
+	} else {
+		rankUrl+= "/api/v1/stats/leaders?leaderCategories=hits,doubles,triples,homeRuns,rbi&statType=career&leaderGameTypes=P&limit=20&statGroup=hitting";
+	}
 	// var wP;
+	getData(rankUrl).then((ranking) => {
+	pRank = ranking;
 	getData(search).then((value) => {
 		var srch;
 		if (!isPitch) {
@@ -360,6 +369,16 @@ async function pitchDisplay(game,ha) {
 		}
 		} else {
 			statsAgainst.innerHTML= "No data available";
+		}
+		if (game.gameData.game.gamedayType == "P") {
+			console.log(pRank);
+			for (var p = 0; p < pRank.leagueLeaders.length; p++) {
+				var isRanked = pRank.leagueLeaders[p].leaders.filter(e => e.person.id == pitchID);
+				console.log(isRanked);
+				if (isRanked.length > 0) {
+					document.getElementById(ha + "Adv").innerHTML+= "<br/>#"+isRanked[0].rank + " all time in postseason " + statAbbr(pRank.leagueLeaders[p].leaderCategory) + " (" + isRanked[0].value + ")";
+				}
+			}
 		}
 		var handH = document.getElementById(ha+"VsHand");//createElement("h3");
 		handH.innerText = game.liveData.plays.currentPlay.matchup.splits[split].replaceAll("_"," ");
@@ -449,7 +468,7 @@ async function pitchDisplay(game,ha) {
 		//div.append(top,img,summ,pitches,head,statsAgainst,handH,hand,duh,due,bph,bPen);
 		//document.getElementById(ha).innerHTML = "";
 		//document.getElementById(ha).appendChild(div);
-		});});
+	});});});
 	getData(baseURL + "/api/v1/game/"+game.gamePk+"/contextMetrics").then((valCM) => {
 		console.log(valCM);
 		for (var i = 0; i < 2; i++) {
@@ -608,4 +627,17 @@ function closeSett() {
 }
 function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+function statAbbr(statId) {
+	if (statId == "homeRuns") {
+		return "HR";
+	} else if (statId == "doubles") {
+		return "2B";
+	} else if (statId == "triples") {
+		return "3B";
+	} else if (statId == "runsBattedIn") {
+		return "RBI";
+	} else {
+		return statId;
+	}
 }
