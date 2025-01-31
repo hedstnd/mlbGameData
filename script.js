@@ -13,7 +13,7 @@ var curPitch;
 var curBat;
 var r = document.querySelector(':root');
 window.onload = function() {
-	getData(baseURL + "/api/v1/schedule?sportId=1,51,22,11,12,13,14,15,16,5442&hydrate=linescore,broadcasts").then((value) => {
+	getData(baseURL + "/api/v1/schedule?sportId=1,51,22,11,12,13,14,15,16,17,5442&hydrate=linescore,broadcasts").then((value) => {
 		console.log(value);
 		if (value.dates.length > 0) {
 			g = value.dates[0].games.filter(e => e.status.statusCode != "S" && e.status.codedGameState != "F");
@@ -157,6 +157,16 @@ async function pitchDisplay(game,ha) {
 			hideCode = "";
 		}
 	}
+	if (game.gameData.flags[ha+"TeamPerfectGame"] && !document.getElementById(ha+"Desc").innerHTML.includes("Perfect")) {
+		document.getElementById(ha+"Desc").innerHTML+= "<br/>Perfect Game Watch";
+	} else if (document.getElementById(ha+"Desc").innerHTML.includes("Perfect")) {
+		document.getElementById(ha+"Desc").innerHTML = document.getElementById(ha+"Desc").innerHTML.replaceAll("Perfect Game Watch","");
+	}
+	if (game.gameData.flags[ha+"TeamNoHitter"] && !document.getElementById(ha+"Desc").innerHTML.includes("No-Hitter")) {
+		document.getElementById(ha+"Desc").innerHTML+= "<br/>No-Hitter Watch";
+	} else if (document.getElementById(ha+"Desc").innerHTML.includes("No-Hitter")) {
+		document.getElementById(ha+"Desc").innerHTML = document.getElementById(ha+"Desc").innerHTML.replaceAll("No-Hitter Watch","");
+	}
 	document.getElementById("topBot").innerText = game.liveData.linescore.inningState;
 	document.getElementById("innNum").innerText = game.liveData.linescore.currentInningOrdinal;
 	document.getElementById(ha+"WPImg").src = "https://midfield.mlbstatic.com/v1/team/"+game.gameData.teams[ha].id+"/spots/144";
@@ -269,14 +279,14 @@ async function pitchDisplay(game,ha) {
 			if (game.gameData.game.type == "S") {
 				search = baseURL + "/api/v1/people/"+ pitchID + "?hydrate=stats(season="+(dateForYear.getFullYear() - 1)+",group=pitching,type=[seasonAdvanced,pitchArsenal,sabermetrics,statSplits,statSplitsAdvanced],sitCodes="+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)+")"
 			} else {
-		search = baseURL + "/api/v1/people/"+ pitchID + "?hydrate=stats(group=pitching,type=[seasonAdvanced,pitchArsenal,sabermetrics,statSplits,statSplitsAdvanced],sitCodes="+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)+")"
+		search = baseURL + "/api/v1/people/"+ pitchID + "?hydrate=stats(season="+game.gameData.game.season+",group=pitching,type=[seasonAdvanced,pitchArsenal,sabermetrics,statSplits,statSplitsAdvanced],sitCodes="+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)+")"
 			}
 		}
 	} else {
 		if (game.gameData.game.type == "S") {
 			search = baseURL + "/api/v1/people/"+pitchID+"?hydrate=stats(season="+(dateForYear.getFullYear() - 1)+",group=hitting,type=[seasonAdvanced,statSplits,sabermetrics,statSplitsAdvanced],sitCodes=["+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.batter)+",c"+game.liveData.plays.currentPlay.count.balls + game.liveData.plays.currentPlay.count.strikes;
 		} else {
-		search = baseURL + "/api/v1/people/"+pitchID+"?hydrate=stats(group=hitting,type=[seasonAdvanced,statSplits,sabermetrics,statSplitsAdvanced],sitCodes=["+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.batter)+",c"+game.liveData.plays.currentPlay.count.balls + game.liveData.plays.currentPlay.count.strikes;
+		search = baseURL + "/api/v1/people/"+pitchID+"?hydrate=stats(season="+game.gameData.game.season+",group=hitting,type=[seasonAdvanced,statSplits,sabermetrics,statSplitsAdvanced],sitCodes=["+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.batter)+",c"+game.liveData.plays.currentPlay.count.balls + game.liveData.plays.currentPlay.count.strikes;
 		}
 		if (r1 && r2 && r3) {
 			search+=",r123";
@@ -295,13 +305,23 @@ async function pitchDisplay(game,ha) {
 	}
 	var pRank;
 	var rankUrl = baseURL;
-	if (isPitch) {
-		rankUrl +="/api/v1/stats/leaders?leaderCategories=wins,strikeOuts,saves&statType=career&leaderGameTypes=P&limit=50&statGroup=pitching";
-	} else {
-		rankUrl+= "/api/v1/stats/leaders?leaderCategories=hits,doubles,triples,homeRuns,rbi&statType=career&leaderGameTypes=P&limit=20&statGroup=hitting";
+	if (game.gameData.game.type == "P" || game.gameData.game.type == "W" || game.gameData.game.type == "D" || game.gameData.game.type == "L" || game.gameData.game.type == "C") {
+		if (isPitch) {
+			rankUrl +="/api/v1/stats/leaders?leaderCategories=wins,strikeOuts,saves&statType=career&leaderGameTypes=P&limit=50&statGroup=pitching";
+		} else {
+			rankUrl+= "/api/v1/stats/leaders?leaderCategories=hits,doubles,triples,homeRuns,rbi&statType=career&leaderGameTypes=P&limit=20&statGroup=hitting";
+		}
+	}
+	else {
+		if (isPitch) {
+			rankUrl +="/api/v1/stats/leaders?leaderCategories=wins,strikeOuts,saves,era,&statType=statsSingleSeason&leaderGameTypes=R&limit=50&statGroup=pitching&leagueId="+game.gameData.teams[ha].league.id;
+		} else {
+			rankUrl+= "/api/v1/stats/leaders?leaderCategories=hits,walks,slg,homeRuns,rbi,avg,obp,ops,strikeOuts,totalBases&statType=statsSingleSeason&leaderGameTypes=R&limit=50&statGroup=hitting&leagueId="+game.gameData.teams[ha].league.id;
+		}
 	}
 	// var wP;
 	getData(rankUrl).then((ranking) => {
+		console.log(ranking);
 	pRank = ranking;
 	getData(search).then((value) => {
 		var srch;
@@ -348,7 +368,7 @@ async function pitchDisplay(game,ha) {
 		// head.innerText = "Advanced Stats";
 		statsAgainst = document.getElementById(ha+"Adv");//createElement("p");
 		if (val.seasonAdvanced) {
-		statsAgainst.innerHTML = val.seasonAdvanced.pitchesPerPlateAppearance;
+		statsAgainst.innerHTML = (val.seasonAdvanced.pitchesPerPlateAppearance || "--");
 		if (isPitch) {
 			statsAgainst.innerHTML += " Pitches/BF&emsp;" + val.seasonAdvanced.strikeoutsPer9 + " K/9&emsp;";
 		} else {
@@ -370,13 +390,22 @@ async function pitchDisplay(game,ha) {
 		} else {
 			statsAgainst.innerHTML= "No data available";
 		}
-		if (game.gameData.game.gamedayType == "P") {
+		if (game.gameData.game.type == "P"|| game.gameData.game.type == "W" || game.gameData.game.type == "D" || game.gameData.game.type == "L" || game.gameData.game.type == "C") {
 			console.log(pRank);
 			for (var p = 0; p < pRank.leagueLeaders.length; p++) {
 				var isRanked = pRank.leagueLeaders[p].leaders.filter(e => e.person.id == pitchID);
 				console.log(isRanked);
 				if (isRanked.length > 0) {
 					document.getElementById(ha + "Adv").innerHTML+= "<br/>#"+isRanked[0].rank + " all time in postseason " + statAbbr(pRank.leagueLeaders[p].leaderCategory) + " (" + isRanked[0].value + ")";
+				}
+			}
+		} else if (game.gameData.game.type == "R" || game.gameData.game.type == "A") {
+			console.log(pRank.leagueLeaders);
+			for (var p = 0; p < pRank.leagueLeaders.length; p++) {
+				var isRanked = pRank.leagueLeaders[p].leaders.filter(e => e.person.id == pitchID && e.season == game.gameData.game.season);
+				console.log(isRanked);
+				if (isRanked.length > 0) {
+					document.getElementById(ha + "Adv").innerHTML+= "<br/>#"+isRanked[0].rank + " all time in single-season " + isRanked[0].league.name + " " + statAbbr(pRank.leagueLeaders[p].leaderCategory) + " (" + isRanked[0].value + ")";
 				}
 			}
 		}
@@ -637,7 +666,23 @@ function statAbbr(statId) {
 		return "3B";
 	} else if (statId == "runsBattedIn") {
 		return "RBI";
-	} else {
+	}
+	else if	(statId == "onBasePlusSlugging") {
+		return "OPS";
+	}
+	else if	(statId == "onBasePercentage") {
+		return "OBP";
+	} else if	(statId == "battingAverage") {
+		return "AVG";
+	} else if	(statId == "strikeOuts") {
+		return "strikeouts";
+	} else if	(statId == "totalBases") {
+		return "total bases";
+	} else if	(statId == "sluggingPercentage") {
+		return "SLG";
+	} else if	(statId == "baseOnBalls") {
+		return "walks";
+	}   else {
 		return statId;
 	}
 }
