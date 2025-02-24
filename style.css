@@ -734,15 +734,15 @@ p {
 .nym.away {
 	color: #002d72;
 }
-.oak.home {
+.ath.home {
 	background-color: #003831;
 	color: #efb21e;
 }
-.oak.away {
+.ath.away {
 	color: #003831;
 	/* -webkit-text-stroke:1px #efb21e; */
 	/* text-stroke:1px #efb21e; */
-	text-shadow: 0.03em 0 0 #efb21e, 0 0.03em 0 #efb21e, -0.03em 0 0 #efb21e, 0 -0.03em 0 #efb21e;
+	/* text-shadow: 0.03em 0 0 #efb21e, 0 0.03em 0 #efb21e, -0.03em 0 0 #efb21e, 0 -0.03em 0 #efb21e; */
 }
 .pit.home {
 	/* -webkit-text-stroke: 0.5px #fdb827; */
