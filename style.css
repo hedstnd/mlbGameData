@@ -430,14 +430,22 @@ p {
 	color: #14225a;
 }
 .was.home.friday, .was.home.saturday {
-	background-color: dimgray;
-	color: #fffdd0;
-	text-shadow: 1px 0 0 #14225a, 0 1px 0 #14225a, 0 -1px 0 #14225a, -1px 0 0 #14225a, -1.5px 1.5px 0 #ffb7ae;
+	background: url('logos/was-frisat-bg.png') !important;
+	background-size: contain !important;
+	background-repeat: repeat-x !important;
+}
+.was.home.friday, .was.home.saturday {
+	/* background-color: dimgray; */
+	color: #141823;
+	/* text-shadow: 1px 0 0 #14225a, 0 1px 0 #14225a, 0 -1px 0 #14225a, -1px 0 0 #14225a, -1.5px 1.5px 0 #ffb7ae; */
+}
+#homeWPSpan.was.home.saturday, #homeWPSpan.was.home.friday {
+	background: #9eb4ca !important;
 }
 .was.home.friday #homeWPImg, .was.home.saturday #homeWPImg {
-	content: url('logos/was-fri-sat.png');
-	background-color: gray;
-	border-radius: 50%;
+	content: url('logos/was-frisat.png');
+	/* background-color: gray; */
+	/* border-radius: 50%; */
 }
 .ari.home {
 	-webkit-text-stroke: 0.03em #30ced8;
@@ -564,12 +572,16 @@ p {
 	background-color: #c4ced4;
 	color: #333366;
 }
-.col.home.wednesday, .col.home.saturday {
-	background-color: #023020;
-	color: #fff;
+.col.home.friday {
+	/* background-color: #4b4bbf; */
+	background: linear-gradient(#76aae1, #76aae1 33%, #4b4bbf 33%, #4b4bbf) !important;
+	color: #ff175f;
 }
-.col.home.wednesday #homeWPImg, .col.home.saturday #homeWPImg {
-	content: url('https://media-s3-us-east-1.ceros.com/mlb/images/2022/05/23/f54767fef8e727d2634db80e5c96a037/patch.png');
+.col.home.friday#homeWPSpan {
+	background: #76aae1 !important;
+}
+.col.home.friday #homeWPImg {
+	content: url('logos/col-fri.png');
 }
 .det.home.friday.night {
 	background: url('logos/det-fri-bg.png') !important;
@@ -601,6 +613,13 @@ p {
 .hou.away {
 	color: #eb6e1f;
 	background-color: #002d62;
+}
+.hou.home.monday {
+	background-color: #fff;
+	color: #15325a;
+}
+.hou.home.monday #homeWPImg {
+	content: url('logos/hou-mon.png');
 }
 .kc.home {
 	color: #004687;
@@ -782,8 +801,22 @@ p {
 	text-stroke: 0.5px #fd5a1e;
 }
 .sf.home.tuesday {
-	background-color: #fff;
+	/* background-color: #fff; */
 	color: #fd5a1e;
+	background-color: #000;
+	text-stroke: unset !important;
+	-webkit-text-stroke: unset !important;
+	
+}
+.sf.home.tuesday#homeWPImg {
+	content: url('logos/sf-tue.png');
+}
+.sf.home.tuesday #innNum, .sf.home.tuesday #homeWP, .sf.home.tuesday #homeDesc, .sf.home.tuesday #homeScore, .sf.home.tuesday #homeName, .sf.home.tuesday h3, .sf.home.tuesday li, .sf.home.tuesday p {
+	color: transparent !important;
+	background-clip: text;
+	-webkit-background-clip: text;
+	background-image: url('logos/sf-tue-text.png');
+	background-size: contain;
 }
 .sf.home.friday {
 	background-color: #fd5a1e;
