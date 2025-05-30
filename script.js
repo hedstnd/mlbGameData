@@ -11,12 +11,23 @@ var uRL;
 var hideCode = "";
 var curPitch;
 var curBat;
+var historicGame = false;
 var r = document.querySelector(':root');
 window.onload = function() {
-	getData(baseURL + "/api/v1/schedule?sportId=1,51,22,11,12,13,14,15,16,17,5442&hydrate=linescore,broadcasts").then((value) => {
+	var extUrl = "/api/v1/schedule?sportId=1,51,22,11,12,13,14,15,16,17,5442&hydrate=linescore,broadcasts";
+	var que = window.location.search.substring(1);
+	if (que.length > 0) {
+		historicGame = true;
+		extUrl+="&date=" + que;
+	}
+	getData(baseURL + extUrl).then((value) => {
 		console.log(value);
 		if (value.dates.length > 0) {
-			g = value.dates[0].games.filter(e => e.status.statusCode != "S" && e.status.codedGameState != "F");
+			if (!historicGame) {
+				g = value.dates[0].games.filter(e => e.status.statusCode != "S" && e.status.codedGameState != "F");
+			} else {
+				g = value.dates[0].games;
+			}
 			if (value.dates[0].games.length > 15) {
 				g = g.sort((a,b) => {
 					return a.teams.home.team.id - b.teams.home.team.id;
@@ -61,9 +72,17 @@ window.onload = function() {
 						game.innerHTML += "none";
 					}
 					if (g[j].gameType != "R" && g[j].gameType != "S") {
-						game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\",\""+ g[j].description +"\")");
+						if (!historicGame) {
+							game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\",\""+ g[j].description +"\")");
+						} else {
+							game.setAttribute("onclick","runHistGD(\""+baseURL+g[j].link+"\",\""+ g[j].description +"\")");
+						}
 					} else {
-							game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
+							if (!historicGame) {
+								game.setAttribute("onclick","runGD(\""+baseURL+g[j].link+"\")");
+							} else {
+								game.setAttribute("onclick","runHistGD(\""+baseURL+g[j].link+"\")");
+							}
 					}
 					row.appendChild(game);
 				}  else if (g[j].status.statusCode != g[j].status.codedGameState) {
@@ -118,6 +137,28 @@ function runGD(url, desc="") {
 	}
 	run = setInterval(gameDay,10000);
 }
+async function runHistGD(url, desc="") {
+	var stamps;
+	document.getElementById("sett").className+=" gameOn";
+	await getData(url+"/timestamps").then((sTamps) => {
+		stamps = sTamps;
+	});
+			var iterate = 0;
+		for (var i = 0; i < stamps.length; i++) {
+			uRL = url + "?timecode="+stamps[i];
+			gameDay();
+			if (i+1 != stamps.length) {
+				await timeout(timeDiff(stamps[i],stamps[i+1]));
+			}
+		}
+	if (desc.length > 0) {
+		var splText = splitInHalf(desc);
+		document.getElementById("awayDesc").innerHTML = splText[0];
+		// document.getElementById("awayDesc").after(document.createElement("br"));
+		document.getElementById("homeDesc").innerHTML = splText[1];
+		// document.getElementById("homeDesc").after(document.createElement("br"));
+	}
+}
 async function pitchDisplay(game,ha) {
 	try {
 		if (!wlSupp && game.gameData.status.codedGameState != "F") {
@@ -159,12 +200,12 @@ async function pitchDisplay(game,ha) {
 	}
 	if (game.gameData.flags[ha+"TeamPerfectGame"] && !document.getElementById(ha+"Desc").innerHTML.includes("Perfect")) {
 		document.getElementById(ha+"Desc").innerHTML+= "<br/>Perfect Game Watch";
-	} else if (document.getElementById(ha+"Desc").innerHTML.includes("Perfect")) {
+	} else if (!game.gameData.flags[ha+"TeamPerfectGame"] && document.getElementById(ha+"Desc").innerHTML.includes("Perfect")) {
 		document.getElementById(ha+"Desc").innerHTML = document.getElementById(ha+"Desc").innerHTML.replaceAll("Perfect Game Watch","");
 	}
 	if (game.gameData.flags[ha+"TeamNoHitter"] && !document.getElementById(ha+"Desc").innerHTML.includes("No-Hitter")) {
 		document.getElementById(ha+"Desc").innerHTML+= "<br/>No-Hitter Watch";
-	} else if (document.getElementById(ha+"Desc").innerHTML.includes("No-Hitter")) {
+	} else if (!game.gameData.flags[ha+"TeamNoHitter"] && document.getElementById(ha+"Desc").innerHTML.includes("No-Hitter")) {
 		document.getElementById(ha+"Desc").innerHTML = document.getElementById(ha+"Desc").innerHTML.replaceAll("No-Hitter Watch","");
 	}
 	document.getElementById("topBot").innerText = game.liveData.linescore.inningState;
@@ -463,7 +504,7 @@ async function pitchDisplay(game,ha) {
 				//avg, ops, hr, rbi, pa
 				hand.innerHTML += "</p><h3>Bases Loaded</h3><p>"+val.statSplits["r123"].avg + " AVG&emsp;"+val.statSplits["r123"].ops+ " OPS&emsp;"+val.statSplits.r123.homeRuns + " HR&emsp;" + val.statSplits.r123.rbi + " RBI&emsp;"+ val.statSplits.r123.plateAppearances + " PA";
 			} else if (risp2) {
-				hand.innerHTML += "</p><h3>RISP, 2 out</h3><p>"+val.statSplits["risp2"].avg + " AVG&emsp;"+val.statSplits["risp2"].ops+ " OPS&emsp;"+val.statSplitsAdvanced.risp2.extraBaseHits + " XBH&emsp;" + val.statSplitsAdvanced.risp2.leftOnBase + " LOB&emsp;"+ val.statSplitsAdvanced.risp2.plateAppearances + " PA";
+				hand.innerHTML += "</p><h3>RISP, 2 out</h3><p>"+val.statSplits["risp2"].avg + " AVG&emsp;"+val.statSplits["risp2"].ops+ " OPS&emsp;"+val.statSplitsAdvanced.risp2.extraBaseHits + " XBH&emsp;" +val.statSplitsAdvanced.risp2.rbi"+ RBI&emsp;+ val.statSplitsAdvanced.risp2.leftOnBase + " LOB&emsp;"+ val.statSplitsAdvanced.risp2.plateAppearances + " PA";
 			} else if (r3l2) {
 				hand.innerHTML += "</p><h3>Runner on 3rd, &lt;2 out</h3><p>"+val.statSplits["r3l2"].avg + " AVG&emsp;"+val.statSplits["r3l2"].ops+ " OPS&emsp;"+val.statSplitsAdvanced.r3l2.extraBaseHits + " XBH&emsp;" + val.statSplitsAdvanced.r3l2.leftOnBase + " LOB&emsp;"+ val.statSplitsAdvanced.r3l2.plateAppearances + " PA";
 			}
@@ -527,7 +568,8 @@ async function pitchDisplay(game,ha) {
 		//document.getElementById(ha).innerHTML = "";
 		//document.getElementById(ha).appendChild(div);
 	});});});
-	getData(baseURL + "/api/v1/game/"+game.gamePk+"/contextMetrics").then((valCM) => {
+	if (!historicGame) {
+		getData(baseURL + "/api/v1/game/"+game.gamePk+"/contextMetrics").then((valCM) => {
 		console.log(valCM);
 		for (var i = 0; i < 2; i++) {
 			var wProbText = game.gameData.teams[twos[i]].abbreviation +  " Win&nbsp;Probability:&nbsp;"+(Math.round(valCM[twos[i]+"WinProbability"]*10)/10)+"%";
@@ -550,7 +592,39 @@ async function pitchDisplay(game,ha) {
 			}
 		}
 	});
-	
+	} else {
+		getData(baseURL + "/api/v1/game/"+game.gamePk+"/winProbability").then((winArray) => {
+		// console.log(valCM);
+		var valCM;
+		try {
+			valCM =  winArray.filter(e => e.atBatIndex == game.liveData.plays.currentPlay.atBatIndex-1)[0];
+		} catch (err) {
+			valCM = new Object();
+			valCM.homeTeamWinProbability = 50;
+			valCM.awayTeamWinProbability = 50;
+		}
+		for (var i = 0; i < 2; i++) {
+			var wProbText = game.gameData.teams[twos[i]].abbreviation +  " Win&nbsp;Probability:&nbsp;"+(Math.round(valCM[twos[i]+"TeamWinProbability"]*10)/10)+"%";
+			document.getElementById(twos[i]+"WPSpan").style.width = valCM[twos[i]+"TeamWinProbability"] + "%";
+			document.getElementById(twos[i]+"WP").innerText = "";
+			// document.getElementById(twos[i]+"WPSpan").innerText = "";
+				// document.getElementById(twos[i]+"WPImg").src="";
+				wP = document.getElementById(twos[i]+"WP");//createElement("span");
+				// wP.className = 'winProb';
+				wP.innerHTML = wProbText;
+				// top.before(wP);
+				//document.getElementById(twos[i]+"WPSpan").value=valCM.awayWinProbability;
+			if (valCM[twos[i] + "TeamWinProbability"] <= 2) {
+				// document.getElementById(twos[i]+"WPSpan").innerHTML = wProbText;
+				document.getElementById(twos[i]+"WPImg").style.opacity = "0";
+				document.getElementById(twos[i]+"WPImg").style.width = "0";
+			} else {
+				document.getElementById(twos[i]+"WPImg").style.opacity = "1";
+				document.getElementById(twos[i]+"WPImg").style.width = "3dvh";
+			}
+		}
+	});
+	}
 	
 	document.getElementById("scores").style.display = "none";
 	document.getElementById("game").style.display="block";
@@ -714,4 +788,10 @@ function statAbbr(statId) {
 	}   else {
 		return statId;
 	}
+}
+function timeDiff(t1,t2) {
+	return new Date(mlbTimeConv(t2)) - new Date(mlbTimeConv(t1));
+}
+function mlbTimeConv(time) {
+	return "" + time.substring(0,4)+"-"+time.substring(4,6)+"-"+time.substring(6,8)+"T"+time.substring(9,11)+":"+time.substring(11,13)+":"+time.substring(13);
 }
