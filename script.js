@@ -504,7 +504,7 @@ async function pitchDisplay(game,ha) {
 				//avg, ops, hr, rbi, pa
 				hand.innerHTML += "</p><h3>Bases Loaded</h3><p>"+val.statSplits["r123"].avg + " AVG&emsp;"+val.statSplits["r123"].ops+ " OPS&emsp;"+val.statSplits.r123.homeRuns + " HR&emsp;" + val.statSplits.r123.rbi + " RBI&emsp;"+ val.statSplits.r123.plateAppearances + " PA";
 			} else if (risp2) {
-				hand.innerHTML += "</p><h3>RISP, 2 out</h3><p>"+val.statSplits["risp2"].avg + " AVG&emsp;"+val.statSplits["risp2"].ops+ " OPS&emsp;"+ val.statSplitsAdvanced.risp2.extraBaseHits + " XBH&emsp;" + val.statSplitsAdvanced.risp2.rbi+" RBI&emsp;" + val.statSplitsAdvanced.risp2.leftOnBase + " LOB&emsp;"+ val.statSplitsAdvanced.risp2.plateAppearances + " PA";
+				hand.innerHTML += "</p><h3>RISP, 2 out</h3><p>"+val.statSplits["risp2"].avg + " AVG&emsp;"+val.statSplits["risp2"].ops+ " OPS&emsp;"+ val.statSplitsAdvanced.risp2.extraBaseHits + " XBH&emsp;" + val.statSplits["risp2"].rbi+" RBI&emsp;" + val.statSplitsAdvanced.risp2.leftOnBase + " LOB&emsp;"+ val.statSplitsAdvanced.risp2.plateAppearances + " PA";
 			} else if (r3l2) {
 				hand.innerHTML += "</p><h3>Runner on 3rd, &lt;2 out</h3><p>"+val.statSplits["r3l2"].avg + " AVG&emsp;"+val.statSplits["r3l2"].ops+ " OPS&emsp;"+val.statSplitsAdvanced.r3l2.extraBaseHits + " XBH&emsp;" + val.statSplitsAdvanced.r3l2.leftOnBase + " LOB&emsp;"+ val.statSplitsAdvanced.r3l2.plateAppearances + " PA";
 			}
