@@ -456,6 +456,15 @@ p {
 	-webkit-text-stroke: 0.03em #a71930;
 	text-stroke: 0.5px #a71930;
 }
+.ari.home.friday {
+	background-color: #40376e !important;
+	color: #3da3b2 !important;
+	text-stroke: none !important;
+	-webkit-text-stroke: none !important;
+}
+.ari.home.friday #homeWPImg {
+	content: url('logos/ari-fri.png');
+}
 .atl {
 	color: #ce1141;
 }
@@ -517,6 +526,12 @@ p {
 	width: 3dvh;
 	height: auto;
 }
+
+.cws.home.friday {
+	background-color: #ca1429;
+	color: black;
+}
+
 .chc.home {
 	background-color: #0e3386;
 	color: #cc3433;
@@ -661,10 +676,13 @@ p {
 	background-color: #00a3e0;
 }
 .mia.home.saturday {
-	background-color: #ef3340 !important;
-	color: #fff !important;
-	text-shadow: 0 1px #00a3e0, 1px 0 #00a3e0 !important;
+	background-color: #000 !important;
+	color: #23b0ce !important;
+	text-shadow: none !important;
 	-webkit-text-stroke: none !important;
+	background-image: url('logos/mia-sat-bg.png') !important;
+	background-size: contain !important;
+	background-repeat: no-repeat;
 }
 .mia.home.sunday #homeWPImg, .mia.home.day #homeWPImg, .mia.home.night.friday #homeWPImg, .mia.away.friday #awayWPImg, .mia.away.saturday #awayWPImg {
 	content: url('logos/mia-alt.png');
@@ -680,8 +698,11 @@ p {
 	/* -webkit-text-stroke: 0.5px black; */
 /* } */
 .mia.home.saturday #homeWPImg {
-	content: url('logos/mia-sat.png');
+	content: url('logos/mia-sat-305.png');
 	border-radius: 50%;
+}
+#homeWPSpan.mia.home.saturday {
+	background-image: none !important;
 }
 .mil.home {
 	color: #12284b;
