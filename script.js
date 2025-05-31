@@ -3,6 +3,7 @@ var day;// = dayOfWeek[(new Date()).getDay()].toLowerCase();
 var timeOffset = (new Date()).getTimezoneOffset() / 60;
 let wakeLock = null;
 var wlSupp = false;
+var gameDesc;
 var dateForYear = new Date();
 var twos = ["home","away"];
 const baseURL = "https://statsapi.mlb.com";
@@ -137,28 +138,41 @@ function runGD(url, desc="") {
 	}
 	run = setInterval(gameDay,10000);
 }
-async function runHistGD(url, desc="") {
-	var stamps;
-	document.getElementById("sett").className+=" gameOn";
-	await getData(url+"/timestamps").then((sTamps) => {
-		stamps = sTamps;
-	});
-			var iterate = 0;
-		for (var i = 0; i < stamps.length; i++) {
-			uRL = url + "?timecode="+stamps[i];
-			gameDay();
-			if (i+1 != stamps.length) {
-				await timeout(timeDiff(stamps[i],stamps[i+1]));
-			}
-		}
+async function runHistGD(url, desc="", startInd=0) {
+	document.getElementById("nextPlay").removeAttribute("hidden");
+	startingNum = startInd;
+	iterate = startInd;
 	if (desc.length > 0) {
+		gameDesc = desc;
 		var splText = splitInHalf(desc);
 		document.getElementById("awayDesc").innerHTML = splText[0];
 		// document.getElementById("awayDesc").after(document.createElement("br"));
 		document.getElementById("homeDesc").innerHTML = splText[1];
 		// document.getElementById("homeDesc").after(document.createElement("br"));
 	}
+	var stamps;
+	document.getElementById("sett").className+=" gameOn";
+	await getData(url+"/timestamps").then((sTamps) => {
+		stamps = sTamps;
+	});
+			// var iterate = 0;
+		for (var i = iterate; i < stamps.length; i++) {
+			if (startingNum != startInd) {
+				break;
+			}
+			iterate = i;
+			uRL = url + "?timecode="+stamps[i];
+			gameDay();
+			if (i+1 != stamps.length) {
+				await timeout(timeDiff(stamps[i],stamps[i+1]));
+			}
+		}
 }
+function nextPlay() {
+	iterate++;
+	runHistGD(uRL.split("?")[0],gameDesc || "",iterate);
+}
+
 async function pitchDisplay(game,ha) {
 	try {
 		if (!wlSupp && game.gameData.status.codedGameState != "F") {
