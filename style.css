@@ -272,7 +272,7 @@ p {
 	background-color: #fffdd0 !important;
 	text-shadow: 0.5px 0 0 #284898, 0 0.5px 0 #284898, -0.5px 0 0 #284898, 0 -0.5px 0 #284898;
 }
-.phi.home.friday #homeWPImg, .phi.home.day.friday #homeWPImg {
+.phi.home.night.friday #homeWPImg {
 	content: url('logos/phi-fri.png');
 	background-color: #00163b !important;
 	border-radius: 50% !important;
@@ -296,22 +296,22 @@ p {
 	border-radius: 50% !important;
 	width: 3dvh !important;
 }
-.phi.home.friday#homeWPSpan {
+.phi.home.night.friday#homeWPSpan {
 	/* background-color: #0397d6 !important; */
 	background: #0397d6 !important;
 }
-.phi.home.friday {
+.phi.home.night.friday {
 	background: linear-gradient(#0397d6 30%, #00163b 70%) !important;
 	/* color: #ffde00 !important; */
 }
-.phi.home.friday #innNum, .phi.home.friday #homeWP, .phi.home.friday #homeDesc, .phi.home.friday #homeScore, .phi.home.friday #homeName, .phi.home.friday h3, .phi.home.friday li, .phi.home.friday p {
+.phi.home.night.friday #innNum, .phi.home.night.friday #homeWP, .phi.home.night.friday #homeDesc, .phi.home.night.friday #homeScore, .phi.home.night.friday #homeName, .phi.home.night.friday h3, .phi.home.night.friday li, .phi.home.night.friday p {
 	color: transparent !important;
 	background-clip: text;
 	-webkit-background-clip: text;
 	background-image: url('logos/phi-fri-text.png');
 	background-size: contain;
 }
-.phi.home.friday #homeNm, .phi.home.friday .showSett {
+.phi.home.night.friday #homeNm, .phi.home.night.friday .showSett {
 	color: rgb(255,202,36) !important;
 }
 .phi.home {
