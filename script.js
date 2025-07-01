@@ -258,7 +258,18 @@ async function pitchDisplay(game,ha) {
 	var tmCode = game.gameData.teams[ha].fileCode;
 	var isPitch = game.liveData.linescore.isTopInning == (ha == "home");
 	if (game.gameData.game.type != "A") {
-		document.getElementById(ha).className = tmCode + " " + ha + " " + dayNight + " " + day;
+		// document.getElementById(ha).className = tmCode + " " + ha + " " + dayNight + " " + day;
+		getData(baseURL + "/api/v1/uniforms/game?gamePks="+game.gamePk).then((uni) => {
+			var jersey;
+			try {
+				jersey = uni.uniforms[0][ha].uniformAssets.filter(e => e.uniformAssetType.uniformAssetTypeId == 1)[0].uniformAssetCode;
+			} catch (err) {
+				jersey = "000_" + dayNight + " " + day + "_0000";
+			}
+			var jerseyCode = jersey.slice(jersey.indexOf("_")+1,-5);
+			document.getElementById(ha).className = tmCode + " " + ha + " " + jerseyCode;
+			document.getElementById(ha + "WPSpan").className = tmCode + " " + ha + " " + jerseyCode;
+		});
 	} else {
 		var playerTm;
 		if (isPitch) {
@@ -271,12 +282,19 @@ async function pitchDisplay(game,ha) {
 				playerTm = lin.people[0].currentTeam.fileCode;
 			});
 		}
-		document.getElementById(ha).className = playerTm + " " + ha + " " + dayNight;
+		// document.getElementById(ha).className = playerTm + " " + ha + " " + dayNight;
+		var uniWatch = await getData(baseURL + "/api/v1/uniforms/game?gamePks="+game.gamePk).then((uni) => {
+			console.log(tmCode);
+			var jersey = uni.uniforms[0][ha].uniformAssets.filter(e => e.uniformAssetType.uniformAssetTypeId == 1)[0].uniformAssetCode;
+			var jerseyCode = jersey.slice(jersey.indexOf("_")+1,-5);
+			document.getElementById(ha).className = playerTm + " " + ha + " " + jerseyCode;
+			document.getElementById(ha + "WPSpan").className = tmCode + " " + ha + " " + jerseyCode;
+		});
 	}
 	if (game.gameType == "S") {
 		document.getElementById(ha).className += " spring";
 	}
-	document.getElementById(ha + "WPSpan").className = tmCode + " " + ha + " " + dayNight + " " + day;
+	// document.getElementById(ha + "WPSpan").className = tmCode + " " + ha + " " + dayNight + " " + day;
 	// vars = game;
 	
 	console.log(ha);
