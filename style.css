@@ -268,7 +268,7 @@ p {
 	background-color: gray;
 	color: white;
 }
-.phi.home.day, .phi.jersey_3 {
+.phi.home.day, .phi.jersey_3 #homeWPImg {
 	background-color: #fffdd0 !important;
 	text-shadow: 0.5px 0 0 #284898, 0 0.5px 0 #284898, -0.5px 0 0 #284898, 0 -0.5px 0 #284898;
 }
