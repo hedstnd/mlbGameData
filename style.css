@@ -268,7 +268,7 @@ p {
 	background-color: gray;
 	color: white;
 }
-.phi.home.day, .phi.jersey_3 #homeWPImg {
+.phi.home.day, .phi.jersey_3 {
 	background-color: #fffdd0 !important;
 	text-shadow: 0.5px 0 0 #284898, 0 0.5px 0 #284898, -0.5px 0 0 #284898, 0 -0.5px 0 #284898;
 }
@@ -279,7 +279,7 @@ p {
 	height: 3dvh !important;
 	width: auto;
 }
-.phi.home.day #homeWPImg, .phi.jersey_3 {
+.phi.home.day #homeWPImg, .phi.jersey_3 #homeWPImg {
 	content: url('logos/phi-day.png');
 	background-color: #284898 !important;
 	border-radius: 50% !important;
