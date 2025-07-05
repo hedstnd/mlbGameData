@@ -606,7 +606,7 @@ p {
 	color: #fff;
 	-webkit-text-stroke: 0.5px #6f96cb;
 }
-.chc.home.friday #homeWPImg, .chc.jersey_5#homeWPImg {
+.chc.home.friday #homeWPImg, .chc.jersey_5 #homeWPImg {
 	content: url('logos/chc-fri.png');
 	border-radius: 50%;
 }
@@ -616,6 +616,10 @@ p {
 .cin.away, .cin.jersey_2 {
 	background-color: gray;
 	color: #c6011f;
+}
+.cin.jersey_3 {
+	background-color: #c6011f;
+	color: white;
 }
 .cin.home.friday, .cin.jersey_5 {
 	background-color: #000;
