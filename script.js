@@ -287,7 +287,7 @@ async function pitchDisplay(game,ha) {
 			console.log(tmCode);
 			var jersey = uni.uniforms[0][ha].uniformAssets.filter(e => e.uniformAssetType.uniformAssetTypeId == 1)[0].uniformAssetCode;
 			var jerseyCode = jersey.slice(jersey.indexOf("_")+1,-5);
-			document.getElementById(ha).className = playerTm + " " + ha + " " + jerseyCode;
+			document.getElementById(ha).className = playerTm + " " + ha;// + " " + jerseyCode;
 			document.getElementById(ha + "WPSpan").className = tmCode + " " + ha + " " + jerseyCode;
 		});
 	}

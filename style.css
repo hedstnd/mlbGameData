@@ -265,7 +265,7 @@ p {
 	width: 3dvh;
 }
 .away {
-	background-color: gray;
+	background-color: darkgray;
 	color: white;
 }
 .phi.home.day, .phi.jersey_3 {
@@ -760,10 +760,10 @@ p {
 .ana.jersey_5 {
 	color: #da129c;
 }
-.la.home, .la.jersey_1, .la.jersey_2, .la.jersey_3, .la.jersey_6 {
+.la.home, .la.away, .la.jersey_1, .la.jersey_2, .la.jersey_3, .la.jersey_6 {
 	color: #005a9c;
 }
-.la.away, .la.jersey_4  {
+.la.jersey_4  {
 	background-color: #005a9c;
 	color: #fff;
 }
@@ -996,11 +996,11 @@ p {
 	background-color: black;
 	color: #fd5a1e;
 }
-.sea.home, .seas.jersey_1 {
+.sea.home, .sea.jersey_1 {
 	background-color: #0c2056;
 	color: #c4ced4;
 }
-.sea.away, .seas.jersey_2 {
+.sea.away, .sea.jersey_2 {
 	background-color: #005c5c;
 	color: #c4ced4;
 }
@@ -1021,10 +1021,10 @@ p {
 	background-color: #005c5c;
 	color: #c4ced4;
 }
-.away {
-	background-color: gray;
-	color: white;
-}
+/* .away { */
+	/* background-color: gray; */
+	/* color: white; */
+/* } */
 /* #scores table, #scores tr:first-child td:first-child { */
 	/* border-top-left-radius: 10px; */
 /* } */
