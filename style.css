@@ -369,7 +369,7 @@ p {
 }
 .tb.away, tb.jersey_2 {
 	background-color: #092c5c;
-	color; white;
+	color: white !important;
 	/* text-stroke: 0.5px #8fbce6; */
 	/* -webkit-text-stroke: 0.5px #8fbce6; */
 	/* text-shadow: 1px 0 0 #8fbce6, 0 1px 0 #8fbce6, -1px 0 0 #8fbce6, 0 -1px 0 #8fbce6; */
