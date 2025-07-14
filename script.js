@@ -285,10 +285,10 @@ async function pitchDisplay(game,ha) {
 		// document.getElementById(ha).className = playerTm + " " + ha + " " + dayNight;
 		var uniWatch = await getData(baseURL + "/api/v1/uniforms/game?gamePks="+game.gamePk).then((uni) => {
 			console.log(tmCode);
-			var jersey = uni.uniforms[0][ha].uniformAssets.filter(e => e.uniformAssetType.uniformAssetTypeId == 1)[0].uniformAssetCode;
-			var jerseyCode = jersey.slice(jersey.indexOf("_")+1,-5);
+			// var jersey = uni.uniforms[0][ha].uniformAssets.filter(e => e.uniformAssetType.uniformAssetTypeId == 1)[0].uniformAssetCode;
+			// var jerseyCode = jersey.slice(jersey.indexOf("_")+1,-5);
 			document.getElementById(ha).className = playerTm + " " + ha;// + " " + jerseyCode;
-			document.getElementById(ha + "WPSpan").className = tmCode + " " + ha + " " + jerseyCode;
+			document.getElementById(ha + "WPSpan").className = tmCode + " " + ha;// + " " + jerseyCode;
 		});
 	}
 	if (game.gameType == "S") {
