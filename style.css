@@ -393,6 +393,10 @@ p {
 .tex.away, .tex.jersey_2 {
 	background-color: #003278;
 }
+.tex.jersey_3 {
+	color: #fff;
+	background-color: #6bace4;
+}
 .tex.home.friday, .tex.home.saturday, .tex.jersey_5 {
 	background-color: #fffdd0 !important;
 	color: #c0111f;

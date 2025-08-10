@@ -499,6 +499,29 @@ async function pitchDisplay(game,ha) {
 					document.getElementById(ha + "Adv").innerHTML+= "<br/>#"+isRanked[0].rank + " all time in single-season " + isRanked[0].league.name + " " + statAbbr(pRank.leagueLeaders[p].leaderCategory) + " (" + isRanked[0].value + ")";
 				}
 			}
+			if (game.gameData.game.type == "R") {
+				if (!isPitch) {
+					getData(baseURL+"/api/v1/stats/leaders?leaderCategories=walks,homeRuns,hits,doubles,strikeOuts&statType=statsSingleSeason&leaderGameTypes=R&limit=10&statGroup=hitting&playerPool=qualified&teamId="+game.gameData.teams[ha].id).then((tRank) => {
+						for (var p = 0; p < tRank.leagueLeaders.length; p++) {
+							var isRanked = tRank.leagueLeaders[p].leaders.filter(e => e.person.id == pitchID && e.season == game.gameData.game.season);
+							console.log(isRanked);
+							if (isRanked.length > 0) {
+								document.getElementById(ha + "Adv").innerHTML+= "<br/>#"+isRanked[0].rank + " all time in single-season " + isRanked[0].team.name + " " + statAbbr(tRank.leagueLeaders[p].leaderCategory) + " (" + isRanked[0].value + ")";
+							}
+						}
+					});
+			} else {
+				getData(baseURL+"/api/v1/stats/leaders?leaderCategories=strikeOuts,wins,saves,holds&statType=statsSingleSeason&leaderGameTypes=R&limit=10&statGroup=pitching&teamId="+game.gameData.teams[ha].id).then((tRank) => {
+						for (var p = 0; p < tRank.leagueLeaders.length; p++) {
+							var isRanked = tRank.leagueLeaders[p].leaders.filter(e => e.person.id == pitchID && e.season == game.gameData.game.season);
+							console.log(isRanked);
+							if (isRanked.length > 0) {
+								document.getElementById(ha + "Adv").innerHTML+= "<br/>#"+isRanked[0].rank + " all time in single-season " + isRanked[0].team.name + " " + statAbbr(tRank.leagueLeaders[p].leaderCategory) + " (" + isRanked[0].value + ")";
+							}
+						}
+					});
+				}
+			}
 		}
 		var handH = document.getElementById(ha+"VsHand");//createElement("h3");
 		handH.innerText = game.liveData.plays.currentPlay.matchup.splits[split].replaceAll("_"," ");
