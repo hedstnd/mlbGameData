@@ -53,9 +53,11 @@ window.onload = function() {
 					if (g[j].status.statusCode == "P") {
 						game.innerHTML = g[j].teams.away.team.name + " @ " + g[j].teams.home.team.name + "<br/>First Pitch: " + getGameTime(g[j].gameDate);
 					} else {
+						if (g[j].linescore) {
 						game.innerHTML = g[j].teams.away.team.name + " " + g[j].teams.away.score + " @ " + g[j].teams.home.team.name + " " + g[j].teams.home.score+"<br/>"+g[j].linescore.inningState+ " " + g[j].linescore.currentInningOrdinal + ", " + g[j].linescore.outs + " outs";
 						if (g[j].status.statusCode != g[j].status.codedGameState) {
 							game.innerHTML+= " ("+g[j].status.detailedState+")";
+						}
 						}
 					}
 					game.innerHTML+= "<br/>TV: ";
