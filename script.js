@@ -214,6 +214,20 @@ async function pitchDisplay(game,ha) {
 			hideCode = "";
 		}
 	}
+	if (game.gameData.review) {
+		document.getElementById(ha+"Challenges").innerText = game.gameData.review[ha].remaining + " Challenge";
+		if (game.gameData.review[ha].remaining != 1) {
+			document.getElementById(ha+"Challenges").innerText += "s";
+		}
+		document.getElementById(ha+"Challenges").innerText += " Remaining";
+	}
+	if (game.gameData.absChallenges) {
+		document.getElementById(ha+"Challenges").innerHTML += "<br/>" + game.gameData.absChallenges[ha].remaining + " ABS Challenge";
+		if (game.gameData.absChallenges[ha].remaining != 1) {
+			document.getElementById(ha+"Challenges").innerHTML += "s";
+		}
+		document.getElementById(ha+"Challenges").innerHTML +=" Remaining";
+	}
 	if (game.gameData.flags[ha+"TeamPerfectGame"] && !document.getElementById(ha+"Desc").innerHTML.includes("Perfect")) {
 		document.getElementById(ha+"Desc").innerHTML+= "<br/>Perfect Game Watch";
 	} else if (!game.gameData.flags[ha+"TeamPerfectGame"] && document.getElementById(ha+"Desc").innerHTML.includes("Perfect")) {
@@ -369,8 +383,8 @@ async function pitchDisplay(game,ha) {
 		} else if ((r2 || r3) && game.liveData.linescore.outs == 2) {
 			search+= ",risp2";
 			risp2 = true;
-		} else if (r3 && game.liveData.linescore.outs < 2) {
-			search+= ",r3l2";
+		} else if ((r2 || r3) && game.liveData.linescore.outs < 2) {
+			search+= ",risp";
 			r3l2 = true;
 		}
 		search+= "])";
@@ -563,7 +577,7 @@ async function pitchDisplay(game,ha) {
 			} else if (risp2) {
 				hand.innerHTML += "</p><h3>RISP, 2 out</h3><p>"+val.statSplits["risp2"].avg + " AVG&emsp;"+val.statSplits["risp2"].ops+ " OPS&emsp;"+ val.statSplitsAdvanced.risp2.extraBaseHits + " XBH&emsp;" + val.statSplits["risp2"].rbi+" RBI&emsp;" + val.statSplitsAdvanced.risp2.leftOnBase + " LOB&emsp;"+ val.statSplitsAdvanced.risp2.plateAppearances + " PA";
 			} else if (r3l2) {
-				hand.innerHTML += "</p><h3>Runner on 3rd, &lt;2 out</h3><p>"+val.statSplits["r3l2"].avg + " AVG&emsp;"+val.statSplits["r3l2"].ops+ " OPS&emsp;"+val.statSplitsAdvanced.r3l2.extraBaseHits + " XBH&emsp;" + val.statSplitsAdvanced.r3l2.leftOnBase + " LOB&emsp;"+ val.statSplitsAdvanced.r3l2.plateAppearances + " PA";
+				hand.innerHTML += "</p><h3>with RISP</h3><p>"+val.statSplits["risp"].avg + " AVG&emsp;"+val.statSplits["risp"].ops+ " OPS&emsp;"+ val.statSplitsAdvanced.risp.extraBaseHits + " XBH&emsp;" + val.statSplits["risp"].rbi+" RBI&emsp;" + val.statSplitsAdvanced.risp.leftOnBase + " LOB&emsp;"+ val.statSplitsAdvanced.risp.plateAppearances + " PA";
 			}
 		}
 		} else {
