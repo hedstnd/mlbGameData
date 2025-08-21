@@ -517,7 +517,7 @@ async function pitchDisplay(game,ha) {
 			}
 			if (game.gameData.game.type == "R") {
 				if (!isPitch) {
-					getData(baseURL+"/api/v1/stats/leaders?leaderCategories=walks,homeRuns,hits,doubles,strikeOuts&statType=statsSingleSeason&leaderGameTypes=R&limit=10&statGroup=hitting&playerPool=qualified&teamId="+game.gameData.teams[ha].id).then((tRank) => {
+					getData(baseURL+"/api/v1/stats/leaders?leaderCategories=walks,homeRuns,hits,doubles,strikeOuts,totalBases&statType=statsSingleSeason&leaderGameTypes=R&limit=10&statGroup=hitting&teamId="+game.gameData.teams[ha].id).then((tRank) => {
 						for (var p = 0; p < tRank.leagueLeaders.length; p++) {
 							var isRanked = tRank.leagueLeaders[p].leaders.filter(e => e.person.id == pitchID && e.season == game.gameData.game.season);
 							console.log(isRanked);
