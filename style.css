@@ -290,7 +290,7 @@ p {
 	color: #6f263d  !important;
 	background-color: #6bace4 !important;
 }
-.phi.home.thursday #homeWPImg, .phi.jersey_4 #homeWPImg {
+.phi.home.thursday #homeWPImg, .phi.jersey_4 #homeWPImg, .phi.jersey_4 #awayWPImg {
 	content: url('logos/phi-thurs.png');
 	background-color: #6f263d !important;
 	border-radius: 50% !important;
