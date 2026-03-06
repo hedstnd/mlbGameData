@@ -15,7 +15,7 @@ var curBat;
 var historicGame = false;
 var r = document.querySelector(':root');
 window.onload = function() {
-	var extUrl = "/api/v1/schedule?sportId=1,51,22,11,12,13,14,15,16,17,5442&hydrate=linescore,broadcasts";
+	var extUrl = "/api/v1/schedule?sportId=1,51,22,11,12,13,14,15,16,17,5442&hydrate=linescore,broadcasts&timeZone=America/New_York";
 	var que = window.location.search.substring(1);
 	if (que.length > 0) {
 		historicGame = true;
@@ -343,7 +343,10 @@ async function pitchDisplay(game,ha) {
 		top.innerHTML = "<span id='homeScore'>"+ game.liveData.linescore.teams.home.runs + '</span> <span id="homeName">' + game.gameData.teams.home.clubName+"</span>";
 	}
 	var img = document.getElementById(ha+"Feat");//createElement("img");
-	img.setAttribute("src","https://midfield.mlbstatic.com/v1/people/"+pitchID+"/silo/360");
+	if (game.gameData.teams[ha].league.id == 160) {
+		img.setAttribute("src","https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_360,q_auto:best/v1/people/"+pitchID+"/headshot/wbc/current");
+	}
+	img.setAttribute("src",getPhotoUrl(pitchID,game.gameData.teams[ha].league.id));//"https://midfield.mlbstatic.com/v1/people/"+pitchID+"/silo/360");
 	if (isPitch) {
 		img.setAttribute("alt",game.liveData.plays.currentPlay.matchup.pitcher.fullName);
 		document.getElementById(ha+"Nm").setAttribute("alt",game.liveData.plays.currentPlay.matchup.pitcher.fullName);
@@ -361,18 +364,18 @@ async function pitchDisplay(game,ha) {
 	var search = baseURL;
 	if (isPitch) {
 		console.log(game);
-		if (game.gameData.game.type == "S") {
+		if (game.gameData.game.type == "S" || game.gameData.teams[ha].league.id == 160) {
 			console.log("spring game");
 			search = baseURL + "/api/v1/people/"+ pitchID + "?hydrate=stats(season="+(dateForYear.getFullYear() - 1)+",group=pitching,type=[seasonAdvanced,pitchArsenal,sabermetrics,statSplits,statSplitsAdvanced],sitCodes="+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)+")"
 		} else {
-			if (game.gameData.game.type == "S") {
+			if (game.gameData.game.type == "S" || game.gameData.teams[ha].league.id == 160) {
 				search = baseURL + "/api/v1/people/"+ pitchID + "?hydrate=stats(season="+(dateForYear.getFullYear() - 1)+",group=pitching,type=[seasonAdvanced,pitchArsenal,sabermetrics,statSplits,statSplitsAdvanced],sitCodes="+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)+")"
 			} else {
 		search = baseURL + "/api/v1/people/"+ pitchID + "?hydrate=stats(season="+game.gameData.game.season+",group=pitching,type=[seasonAdvanced,pitchArsenal,sabermetrics,statSplits,statSplitsAdvanced],sitCodes="+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.pitcher)+")"
 			}
 		}
 	} else {
-		if (game.gameData.game.type == "S") {
+		if (game.gameData.game.type == "S" || game.gameData.teams[ha].league.id == 160) {
 			search = baseURL + "/api/v1/people/"+pitchID+"?hydrate=stats(season="+(dateForYear.getFullYear() - 1)+",group=hitting,type=[seasonAdvanced,statSplits,sabermetrics,statSplitsAdvanced],sitCodes=["+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.batter)+",c"+game.liveData.plays.currentPlay.count.balls + game.liveData.plays.currentPlay.count.strikes;
 		} else {
 		search = baseURL + "/api/v1/people/"+pitchID+"?hydrate=stats(season="+game.gameData.game.season+",group=hitting,type=[seasonAdvanced,statSplits,sabermetrics,statSplitsAdvanced],sitCodes=["+getMatchupData(game.liveData.plays.currentPlay.matchup.splits.batter)+",c"+game.liveData.plays.currentPlay.count.balls + game.liveData.plays.currentPlay.count.strikes;
@@ -389,8 +392,8 @@ async function pitchDisplay(game,ha) {
 		}
 		search+= "])";
 	}
-	if ((game.gameData.teams.away.sport.id != 1 && game.gameData.teams.away.sport.id != 51) || (game.gameData.teams.home.sport.id != 1 && game.gameData.teams.home.sport.id != 51)) {
-		search = search.replaceAll("stats(","stats(leagueListId=milb_all,");
+	if (game.gameData.teams[ha].league.id == 160 || (game.gameData.teams.away.sport.id != 1 && game.gameData.teams.away.sport.id != 51) || (game.gameData.teams.home.sport.id != 1 && game.gameData.teams.home.sport.id != 51)) {
+		search = search.replaceAll("stats(","stats(leagueListId=baseball_all,");
 	}
 	// if (game.gameData.teams.away.sport.id == 51 && game.gameData.teams.home.sport.id == 51) {
 		// search = search.replaceAll("sportId","stats(leagueListId=milb_all,");
@@ -595,18 +598,18 @@ async function pitchDisplay(game,ha) {
 				due.appendChild(pics[i]);
 			}
 			if ((isPitch && game.liveData.linescore.outs < 3 )|| (!isPitch && game.liveData.linescore.outs == 3 && (game.gameData.status.statusCode != "F" && game.gameData.status.statusCode != "O"))) {
-				pics[0].src = getPhotoUrl(game.liveData.linescore.defense.batter.id);
-				pics[1].src = getPhotoUrl(game.liveData.linescore.defense.onDeck.id);
-				pics[2].src = getPhotoUrl(game.liveData.linescore.defense.inHole.id);
+				pics[0].src = getPhotoUrl(game.liveData.linescore.defense.batter.id,game.gameData.teams[ha].league.id);
+				pics[1].src = getPhotoUrl(game.liveData.linescore.defense.onDeck.id,game.gameData.teams[ha].league.id);
+				pics[2].src = getPhotoUrl(game.liveData.linescore.defense.inHole.id,game.gameData.teams[ha].league.id);
 			}  else if (isPitch && game.liveData.linescore.outs == 3) {
-				pics[0].src = getPhotoUrl(game.liveData.linescore.offense.batter.id);
-				pics[1].src = getPhotoUrl(game.liveData.linescore.offense.onDeck.id);
-				pics[2].src = getPhotoUrl(game.liveData.linescore.offense.inHole.id);
+				pics[0].src = getPhotoUrl(game.liveData.linescore.offense.batter.id,game.gameData.teams[ha].league.id);
+				pics[1].src = getPhotoUrl(game.liveData.linescore.offense.onDeck.id,game.gameData.teams[ha].league.id);
+				pics[2].src = getPhotoUrl(game.liveData.linescore.offense.inHole.id,game.gameData.teams[ha].league.id);
 			}
 			else {
 				pics[0].src="";
-				pics[1].src = getPhotoUrl(game.liveData.linescore.offense.onDeck.id);
-				pics[2].src = getPhotoUrl(game.liveData.linescore.offense.inHole.id);
+				pics[1].src = getPhotoUrl(game.liveData.linescore.offense.onDeck.id,game.gameData.teams[ha].league.id);
+				pics[2].src = getPhotoUrl(game.liveData.linescore.offense.inHole.id,game.gameData.teams[ha].league.id);
 			}
 		} else {
 			document.getElementById(ha+"Duh").innerText = "";
@@ -625,13 +628,13 @@ async function pitchDisplay(game,ha) {
 		if (isPitch) {
 			for (var i = 0; i < game.liveData.boxscore.teams[ha].bullpen.length; i++) {
 				bPics[i] = document.createElement("img");
-				bPics[i].src = getPhotoUrl(game.liveData.boxscore.teams[ha].bullpen[i]);
+				bPics[i].src = getPhotoUrl(game.liveData.boxscore.teams[ha].bullpen[i],game.gameData.teams[ha].league.id);
 				bPen.appendChild(bPics[i]);
 			}
 		} else {
 				for (var i = 0; i < game.liveData.boxscore.teams[ha].bench.length; i++) {
 				bPics[i] = document.createElement("img");
-				bPics[i].src = getPhotoUrl(game.liveData.boxscore.teams[ha].bench[i]);
+				bPics[i].src = getPhotoUrl(game.liveData.boxscore.teams[ha].bench[i],game.gameData.teams[ha].league.id);
 				bPen.appendChild(bPics[i]);
 			}
 		}
@@ -723,7 +726,10 @@ function makeSplitsWork(data) {
 	}
 	return ret;
 }
-function getPhotoUrl(id) {
+function getPhotoUrl(id,leagueId=1) {
+	if (leagueId == 160) {
+		return "https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_360,q_auto:best/v1/people/"+id+"/headshot/wbc/current";
+	}
 	return "https://midfield.mlbstatic.com/v1/people/"+id+"/silo/360";
 }
 function getGameTime(dt) {
