@@ -286,11 +286,11 @@ p {
 	height: 3dvh !important;
 	width: auto;
 }
-.phi.home.thursday, .phi.jersey_4 {
+.phi.jersey_4 {
 	color: #6f263d  !important;
 	background-color: #6bace4 !important;
 }
-.phi.home.thursday #homeWPImg, .phi.jersey_4 #homeWPImg, .phi.jersey_4 #awayWPImg {
+.phi.jersey_4 #homeWPImg, .phi.jersey_4 #awayWPImg {
 	content: url('logos/phi-thurs.png');
 	background-color: #6f263d !important;
 	border-radius: 50% !important;
@@ -397,19 +397,19 @@ p {
 	color: #fff;
 	background-color: #6bace4;
 }
-.tex.home.friday, .tex.home.saturday, .tex.jersey_5 {
-	background-color: #fffdd0 !important;
-	color: #c0111f;
+.tex.jersey_5 {
+	background-color: #931e2f !important;
+	color: #ffffff;
 }
-.tex.home.friday #homeWPImg, .tex.home.saturday #homeWPImg .tex.jersey_5#homeWPImg{
-	content: url('logos/tex-fri-sat.png');
+.tex.jersey_5#homeWPImg{
+	content: url('logos/tex-cc2.png');
 	height: 2.5dvh;
 	width: auto;
 	padding: .25dvh;
-	border-radius: 50%;
-	background-color: black;
+	/* border-radius: 50%; */
+	/* background-color: black; */
 }
-.tor.home.wednesday, .tor.home.friday, .tor.jersey_5 {
+.tor.home.friday, .tor.jersey_5 {
 	background-color: #141823 !important;
 	color: #364a9e !important;
 }
@@ -420,7 +420,15 @@ p {
 	color: #134a8e;
 }
 .tor.away, .tor.jersey_2 {
+	color: #134a8e;
+}
+.tor.jersey_3 {
 	background-color: #134a8e;
+	color: #ffffff;
+}
+.tor.jersey_4 {
+	background-color: #77a5e1;
+	color: #ffffff;
 }
 .tor.jersey_6 {
 	color: white;
@@ -456,10 +464,19 @@ p {
 	/* background-color: gray; */
 	/* border-radius: 50%; */
 }
+.was.jersey_3 {
+	color: #ffffff;
+	background-color: #ab0003;
+}
+.was.jersey_4 {
+	background-color: #14225a;
+	color: #ffffff;
+}
 .ari.home, .ari.jersey_1 {
 	/* -webkit-text-stroke: 0.03em #30ced8; */
 	/* text-stroke: 0.03em #30ced8; */
 	color: #a71930;
+	background-color: #e3d4ad;
 }
 .ari.away, .ari.jersey_2 {
 	color: #a71930;
@@ -476,7 +493,8 @@ p {
 	content: url('logos/ari-fri.png');
 }
 .ari.jersey_3 {
-	background-color: black;
+	background-color: black !important;
+	color: #a71930;
 }
 .ari.jersey_4 {
 	background-color: #a71930;
@@ -492,15 +510,15 @@ p {
 	color: #13274f;
 	background-color: #ce1141;
 }
-.atl.home.night.saturday, .atl.jersey_5 {
-	background-color: rgb(0,61,166);
+.atl.jersey_5 {
+	background-color: #77a5e1;
 	color: white;
-	text-shadow: 1px 0px 0px rgb(219,0,49), 0px 1px 0px rgb(219,0,49),-1px 0px 0px rgb(219,0,49),0px -1px 0px rgb(219,0,49);
+	/* text-shadow: 1px 0px 0px rgb(219,0,49), 0px 1px 0px rgb(219,0,49),-1px 0px 0px rgb(219,0,49),0px -1px 0px rgb(219,0,49); */
 }
 .atl.home.night.saturday #homeWPImg, .atl.jersey_5 #homeWPImg {
-	content: url('logos/atl-sat.png');
-	background-color: white;
-	border-radius: 50%;
+	content: url('logos/atl-cc2.png');
+	/* background-color: white; */
+	/* border-radius: 50%; */
 }
 .bal.home, .bal.jersey_1 {
 	color: #df4601;
@@ -518,11 +536,12 @@ p {
 	color: #000;
 }
 .bal.jersey_5 {
-	color: #fff;
-	background-color: #000;
+	color: #000;
+	background-color: #fff;
+	text-shadow: 1px 1px white, 3px 3px rgb(255,124,50);
 }
 .bal.jersey_5 #homeWPImg {
-	content: url('logos/bal-cc.png');
+	content: url('logos/bal-cc2.png');
 }
 .bos.home.friday {
 	color: #0c2340;
@@ -615,7 +634,7 @@ p {
 	content: url('logos/chc-fri.png');
 	border-radius: 50%;
 }
-.cin.home, .cin.jersey_1, .cin.jersey_4 {
+.cin.home, .cin.jersey_1 {
 	color: #c6011f;
 }
 .cin.away, .cin.jersey_2 {
@@ -626,13 +645,21 @@ p {
 	background-color: #c6011f;
 	color: white;
 }
-.cin.home.friday, .cin.jersey_5 {
+.cin.home.friday, .cin.jersey_4 {
 	background-color: #000;
 	/* -webkit-text-stroke: 0.5px #c6011f; */
 }
-.cin.jersey_5 #homeWPImg {
+.cin.jersey_4 #homeWPImg {
 	content: url('logos/cin-cc.png');
 }
+.cin.jersey_5 {
+	color: white;
+	background-color: #951630;
+}
+.cin.jersey_5 #homeWPImg {
+	content: url('logos/con-cc2.png');
+}
+
 #homeWPSpan.cle.home.friday, #homeWPSpan.cle.jersey_5 {
 	background: url('logos/cle-fri-wpbg.png') !important;
 	background-size: contain !important;
@@ -706,6 +733,14 @@ p {
 	-webkit-text-stroke: 0.03em #fa4616;
 	text-stroke: 0.03empx #fa4616;
 }
+.det.jersey_3 {
+	background-color: #fa4616;
+	color: #0c2340;
+}
+.det.jersey_4 {
+	color: #fa4616;
+	background-color: #0c2340;
+}
 .hou.home, .hou.jersey_1 {
 	color: #002d62;
 	/* background-color: #eb6e1f; */
@@ -746,12 +781,17 @@ p {
 }
 .kc.jersey_5 {
 	color: #fff;
-	background-color: #13294b;
+	background-image: url('logos/kc-cc2-text.png');
+	background-clip: text;
+	-webkit-background-clip: text;
+}
+.kc.jersey_5#homeWPSpan {
+	background-color: rgb(23,102,255);
 }
 .kc.jersey_5 #homeWPImg {
-	content: url('logos/kc-cc.png');
+	content: url('logos/kc-cc2.png');
 }
-.ana.home, .ana.jersey_1 { /*.laa.home {*/
+.ana.home, .ana.jersey_1, .ana.jersey_4 { /*.laa.home {*/
 	color: #ba0021;
 }
 .ana.away {/*.laa.away {*/
@@ -763,7 +803,7 @@ p {
 	color: #fff;
 }
 .ana.jersey_5 {
-	color: #da129c;
+	color: #da291c;
 }
 .la.home, .la.away, .la.jersey_1, .la.jersey_2, .la.jersey_3, .la.jersey_6 {
 	color: #005a9c;
@@ -795,6 +835,9 @@ p {
 	text-stroke: none /*0.5px #fff*/ !important;
 	-webkit-text-stroke: none /*0.5px #fff*/ !important;
 	background-color: #00a3e0;
+}
+.mia.jersey_4 #homeWPImg {
+	content: url('logos/mia-tb.png');
 }
 .mia.home.saturday, .mia.jersey_5 {
 	background-color: #000 !important;
@@ -838,23 +881,27 @@ p {
 	color: #12284b;
 	/* color: #ffc52f; */
 }
-.mil.home.friday, .mil.jersey_5 {
-	background-color: #74b0e6;
+.mil.jersey_4 {
 	color: #ffc52f;
-	text-shadow: -2px 2px #12284b;
+	background-color: #12284b;
 }
-.mil.home.friday #homeWPImg, .mil.jersey_5 #homeWPImg {
-	content: url('logos/mil-home-fri.png');
+.mil.jersey_5 {
+	background-color: #3a5a7d;
+	color: #f2e6cf;
+	/* text-shadow: -2px 2px #12284b; */
+}
+.mil.jersey_5 #homeWPImg {
+	content: url('logos/mil-cc2.png');
 	height: 3dvh;
 	width: auto;
 }
-.mil.home.friday p, .mil.home.friday h3,.mil.home.friday h2,.mil.home.friday #homeWP, .mil.home.friday ul {
-	/* filter: drop-shadow(-2px 2px #12284b); */
-	-webkit-text-stroke: unset;
-}
-.mil.home.friday p h3, .mil.jersey_5 p h3 {
-	filter: unset;
-}
+/* .mil.home.friday p, .mil.home.friday h3,.mil.home.friday h2,.mil.home.friday #homeWP, .mil.home.friday ul { */
+	filter: drop-shadow(-2px 2px #12284b);
+	/* -webkit-text-stroke: unset; */
+/* } */
+/* .mil.home.friday p h3, .mil.jersey_5 p h3 { */
+	/* filter: unset; */
+/* } */
 .min.home.friday, .min.jersey_5 {
 	background-color: #054c79 !important;
 	color: white !important;
@@ -921,12 +968,12 @@ p {
 	/* text-shadow: 0.03em 0 0 #efb21e, 0 0.03em 0 #efb21e, -0.03em 0 0 #efb21e, 0 -0.03em 0 #efb21e; */
 }
 .ath.jersey_3 {
-	background-color: #115740;
+	background-color: #003831;
 	color: white;
 }
 .ath.jersey_4 {
 	background-color: #efb21e;
-	color: #0038631;
+	color: #003831;
 }
 .pit.home, .pit.jersey_1 {
 	/* -webkit-text-stroke: 0.5px #fdb827; */
@@ -940,7 +987,8 @@ p {
 	color: black;
 }
 .pit.home.friday, .pit.jersey_5 {
-	background-color: #fdb827;
+	background-color: #black;
+	color: #fdb827;
 	-webkit-text-stroke: unset;
 }
 .pit.jersey_3, .pit.jersey_4 {
@@ -954,12 +1002,12 @@ p {
 	background-color: #cec6c0;
 }
 .sd.home.friday, .sd.jersey_5 {
-	background-color: rgb(118,200,177);
-	color: rgb(238,71,143);
+	background-color: #101f2d;
+	color: white;
 }
 .sd.home.friday #homeWPImg, .sd.jersey_5 #homeWPImg {
-	content: url('logos/sd-fri.png');
-	padding-left: .25vw;
+	content: url('logos/sd-cc2.png');
+	/* padding-left: .25vw; */
 }
 .sd.jersey_3 {
 	color: #ffc425;
@@ -984,7 +1032,7 @@ p {
 	-webkit-text-stroke: unset !important;
 	
 }
-.sf.home.tuesday#homeWPImg, .sf.jersey_5#homeWPImg {
+.sf.home.tuesday#homeWPImg, .sf.jersey_5 #homeWPImg {
 	content: url('logos/sf-tue.png');
 }
 .sf.home.tuesday #innNum, .sf.home.tuesday #homeWP, .sf.home.tuesday #homeDesc, .sf.home.tuesday #homeScore, .sf.home.tuesday #homeName, .sf.home.tuesday h3, .sf.home.tuesday li, .sf.home.tuesday p, .sf.jersey_5 #innNum, .sf.jersey_5 #homeWP, .sf.jersey_5 #homeDesc, .sf.jersey_5 #homeScore, .sf.jersey_5 #homeName, .sf.jersey_5 h3, .sf.jersey_5 li, .sf.jersey_5 p {

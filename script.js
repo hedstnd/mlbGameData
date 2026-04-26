@@ -15,7 +15,7 @@ var curBat;
 var historicGame = false;
 var r = document.querySelector(':root');
 window.onload = function() {
-	var extUrl = "/api/v1/schedule?sportId=1,51,22,11,12,13,14,15,16,17,5442&hydrate=linescore,broadcasts&timeZone=America/New_York";
+	var extUrl = "/api/v1/schedule?sportId=1,51,22,11,12,13,14,15,16,17,5442&hydrate=linescore,broadcasts";
 	var que = window.location.search.substring(1);
 	if (que.length > 0) {
 		historicGame = true;
