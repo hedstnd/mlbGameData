@@ -663,7 +663,7 @@ p {
 	background-color: #951630;
 }
 .cin.jersey_5 #homeWPImg {
-	content: url('logos/con-cc2.png');
+	content: url('logos/cin-cc2.png');
 }
 
 #homeWPSpan.cle.home.friday, #homeWPSpan.cle.jersey_5 {
@@ -1000,7 +1000,7 @@ p {
 	color: black;
 }
 .pit.home.friday, .pit.jersey_5 {
-	background-color: #black;
+	background-color: black;
 	color: #fdb827;
 	-webkit-text-stroke: unset;
 }
