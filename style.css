@@ -324,6 +324,12 @@ p {
 	color: #e81828;
 	background-color: silver;
 }
+.phi.jersey_15 {
+	text-shadow: 0.5px 0 0 #031d42, 0 0.5px 0 #031d42, -0.5px 0 0 #031d42, 0 -0.5px 0 #031d42;
+}
+.phi.jersey_15 #awayWPImg {
+	content: url('logos/phi-fod.png');
+}
 .stl.home.friday, .stl.jersey_5 {
 	background-color: #c41e3a !important;
 	color: #fff !important;
@@ -657,7 +663,7 @@ p {
 	background-color: #951630;
 }
 .cin.jersey_5 #homeWPImg {
-	content: url('logos/cin-cc2.png');
+	content: url('logos/con-cc2.png');
 }
 
 #homeWPSpan.cle.home.friday, #homeWPSpan.cle.jersey_5 {
@@ -923,6 +929,13 @@ p {
 	color: white;
 	background-color: #002b5c;
 }
+.min.jersey_15 {
+	color: #031d42 !important;
+	text-shadow: 0.5px 0 0 #e81728, 0 0.5px 0 #e81728, -0.5px 0 0 #e81728, 0 -0.5px 0 #e81728;
+}
+.min.jersey_15 #homeWPImg {
+	content: url('logos/min-fod.png');
+}
 .nyy, .nyy.jersey_1 {
 	color: #0c2340 !important;
 }
@@ -987,7 +1000,7 @@ p {
 	color: black;
 }
 .pit.home.friday, .pit.jersey_5 {
-	background-color: black;
+	background-color: #black;
 	color: #fdb827;
 	-webkit-text-stroke: unset;
 }
